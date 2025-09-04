@@ -592,3 +592,44 @@ body.theme-light .icon-toggle .thumb {
   outline: 0.125rem solid var(--ring); /* 2px -> rem */
   outline-offset: 0.125rem; /* 2px -> rem */
 }
+
+/* Header */
+.header {
+  position: sticky;
+  top: 0;
+  z-index: 50;
+  background: var(--surface);
+  border-bottom: 1px solid var(--border);
+  padding: var(--pad);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+.header .title-container {
+  display: flex;
+  align-items: center;
+  gap: 16px; /* Jarak antara back button dan judul */
+}
+.header .title {
+  font-size: 24px;
+  font-weight: 700;
+  margin: 0;
+}
+.header .back-btn-container {
+  background: var(--accent); /* Kotak hijau */
+  border-radius: var(--radius);
+  padding: 4px; /* Padding dalam kotak */
+}
+.header .back-btn {
+  background: none; /* Hilangkan background dari tombol itu sendiri */
+  color: var(--text);
+  padding: 8px 16px;
+  border: none;
+  border-radius: var(--radius);
+  text-decoration: none;
+  font-weight: 500;
+  transition: color 0.3s; /* Transisi warna teks saat hover */
+}
+.header .back-btn:hover {
+  color: var(--accent-strong); /* Ubah warna teks saat hover */
+}
