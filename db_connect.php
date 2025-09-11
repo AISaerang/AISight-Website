@@ -1,8 +1,8 @@
 <?php
-$host = 'localhost';
-$dbname = 'aisight_db';
-$username = 'your_db_username'; // Ganti dengan username dari Database Management
-$password = 'your_db_password'; // Ganti dengan password dari Database Management
+$host = '145.79.14.134';
+$dbname = 'u199348039_aisight_db';
+$username = 'u199348039_admin'; // Ganti dengan username dari Database Management
+$password = '@!$Db415'; // Ganti dengan password dari Database Management
 
 try {
     $conn = new PDO("mysql:host=$host;dbname=$dbname", $username, $password);
