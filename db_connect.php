@@ -1,5 +1,5 @@
 <?php
-$host = '153.92.15.82';
+$host = 'localhost';
 $dbname = 'u199348039_aisight_db';
 $username = 'u199348039_admin'; // Ganti dengan username dari Database Management
 $password = '@!$Db415'; // Ganti dengan password dari Database Management
