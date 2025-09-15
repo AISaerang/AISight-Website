@@ -288,104 +288,110 @@ if ($user_id) {
       padding: 32px 0;
     }
 
-    .form-container {
-      max-width: 400px;
-      margin: 50px auto;
+    h1 {
+      font-size: clamp(28px, 5vw, 40px);
+      line-height: 1.2;
+      margin: 0 0 16px;
+    }
+
+    .sub {
+      font-size: 18px;
+      color: var(--muted);
+      margin: 0 0 24px;
+    }
+
+    .project-preview {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+      gap: 24px;
+      margin: 32px 0;
+    }
+
+    .project-card {
       background: var(--card);
-      padding: 24px;
-      border-radius: var(--radius);
-      box-shadow: var(--shadow);
-    }
-
-    .form-container label {
-      display: block;
-      margin-bottom: 8px;
-      font-weight: 500;
-    }
-
-    .form-container input, .form-container textarea {
-      width: 100%;
-      padding: 12px;
-      margin-bottom: 16px;
       border: 1px solid var(--border);
-      border-radius: 8px;
-      background: var(--surface);
-      color: var(--text);
-      font-size: 16px;
-      transition: border-color 0.3s, background-color 0.3s;
+      border-radius: var(--radius);
+      padding: 16px;
+      box-shadow: var(--shadow);
+      cursor: pointer;
+      transition: transform 0.2s;
     }
 
-    .form-container input:focus, .form-container textarea:focus {
-      outline: none;
-      border-color: var(--accent);
-      background: var(--card);
+    .project-card:hover {
+      transform: translateY(-5px);
     }
 
-    .form-container button {
+    .project-card img {
       width: 100%;
+      height: auto;
+      border-radius: var(--radius);
+      margin-bottom: 8px;
+    }
+
+    .project-card h3 {
+      margin: 0 0 8px;
+      font-size: 18px;
+    }
+
+    .project-card .details {
+      display: none;
+      margin-top: 16px;
       padding: 12px;
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+    }
+
+    .project-card .details.show {
+      display: block;
+    }
+
+    .project-card .report-container {
+      position: relative;
+      height: 300px;
+      margin-bottom: 16px;
+    }
+
+    .project-card iframe {
+      width: 100%;
+      height: 100%;
+      border: none;
+      border-radius: var(--radius);
+    }
+
+    .project-card .full-screen-btn {
       background: var(--accent);
+      color: var(--text);
+      padding: 8px 16px;
       border: none;
       border-radius: 8px;
-      color: var(--text);
       cursor: pointer;
-      font-weight: 500;
+      margin-top: 8px;
       transition: background-color 0.3s;
     }
 
-    .form-container button:hover {
+    .project-card .full-screen-btn:hover {
       background: var(--accent-strong);
-    }
-
-    .success {
-      color: var(--accent);
-      margin-top: 8px;
-      font-size: 14px;
     }
 
     .error {
       color: var(--ring);
-      margin-top: 8px;
-      font-size: 14px;
+      text-align: center;
+    }
+
+    .sticky-cta {
+      position: fixed;
+      bottom: 24px;
+      right: 24px;
+      display: flex;
+      gap: 12px;
+      z-index: 40;
     }
 
     @media (max-width: 720px) {
-      .nav-menu {
-        display: none;
-        position: absolute;
-        top: 60px;
-        right: 0;
-        flex-direction: column;
-        background: var(--card);
-        padding: 20px;
-        border-radius: var(--radius);
-        box-shadow: var(--shadow);
-        width: 200px;
+      .project-preview {
+        grid-template-columns: 1fr;
       }
-      .nav-menu.active {
-        display: flex;
-      }
-      .hamburger {
-        display: block;
-        width: 30px;
-        height: 20px;
-        position: relative;
-        cursor: pointer;
-      }
-      .hamburger span {
-        position: absolute;
-        height: 3px;
-        width: 100%;
-        background: var(--text);
-        display: block;
-        transition: all 0.3s ease;
-      }
-      .hamburger span:nth-child(1) { top: 0; }
-      .hamburger span:nth-child(2) { top: 50%; transform: translateY(-50%); }
-      .hamburger span:nth-child(3) { bottom: 0; }
-      .hamburger.active span:nth-child(1) { transform: rotate(45deg) translate(5px, 5px); }
-      .hamburger.active span:nth-child(2) { opacity: 0; }
-      .hamburger.active span:nth-child(3) { transform: rotate(-45deg) translate(7px, -7px); }
     }
   </style>
 </head>
@@ -400,7 +406,7 @@ if ($user_id) {
           <a href="#" class="dropdown-toggle">Jalur Belajar</a>
           <div class="dropdown-menu">
             <a href="overview.html">Modul</a>
-            <a href="projects.html">Portofolio</a>
+            <a href="projects.php">Portofolio</a>
           </div>
         </div>
         <a href="simulation.html">Biaya</a>
@@ -455,33 +461,39 @@ if ($user_id) {
 
   <main class="section">
     <div class="container">
-      <div class="form-container">
-        <h1>Submit Proyek</h1>
-        <?php if (isset($success)): ?>
-          <p class="success"><?php echo htmlspecialchars($success); ?></p>
-        <?php endif; ?>
-        <?php if (isset($error)): ?>
-          <p class="error"><?php echo htmlspecialchars($error); ?></p>
-        <?php endif; ?>
-        <form method="POST">
-          <label for="name">Nama Proyek</label>
-          <input type="text" id="name" name="name" placeholder="Masukkan nama proyek" value="<?php echo isset($_POST['name']) ? htmlspecialchars($_POST['name']) : ''; ?>" required>
-
-          <label for="url">URL Power BI</label>
-          <input type="url" id="url" name="url" placeholder="Masukkan URL Power BI" value="<?php echo isset($_POST['url']) ? htmlspecialchars($_POST['url']) : ''; ?>" required>
-
-          <label for="description">Deskripsi</label>
-          <textarea id="description" name="description" placeholder="Deskripsikan proyek Anda" required><?php echo isset($_POST['description']) ? htmlspecialchars($_POST['description']) : ''; ?></textarea>
-
-          <label for="insight">Insight (Opsional)</label>
-          <textarea id="insight" name="insight" placeholder="Tambahkan insight dari proyek"><?php echo isset($_POST['insight']) ? htmlspecialchars($_POST['insight']) : ''; ?></textarea>
-
-          <label for="thumbnail_url">URL Thumbnail (Opsional)</label>
-          <input type="url" id="thumbnail_url" name="thumbnail_url" placeholder="Masukkan URL thumbnail" value="<?php echo isset($_POST['thumbnail_url']) ? htmlspecialchars($_POST['thumbnail_url']) : ''; ?>">
-
-          <button type="submit">Submit</button>
-        </form>
-      </div>
+      <h1>Portofolio Proyek</h1>
+      <p class="sub">Jelajahi proyek Anda dengan preview thumbnail. Klik untuk melihat detail.</p>
+      <?php if (isset($error)): ?>
+        <p class="error"><?php echo htmlspecialchars($error); ?></p>
+      <?php elseif (empty($projects)): ?>
+        <p class="error">Belum ada proyek yang ditambahkan.</p>
+      <?php else: ?>
+        <div class="project-preview">
+          <?php foreach ($projects as $project): ?>
+            <div class="project-card" onclick="toggleDetail(this)">
+              <img src="<?php echo htmlspecialchars($project['thumbnail_url'] ?: 'assets/img/default-thumbnail.jpg'); ?>" alt="<?php echo htmlspecialchars($project['name']); ?>" style="width: 100%; border-radius: var(--radius); margin-bottom: 8px;">
+              <h3><?php echo htmlspecialchars($project['name']); ?></h3>
+              <div class="details">
+                <div class="report-container">
+                  <iframe src="<?php echo htmlspecialchars($project['url']); ?>" frameborder="0"></iframe>
+                </div>
+                <button class="btn full-screen-btn" onclick="toggleFullScreen(this.previousElementSibling.querySelector('iframe'))">Full Screen</button>
+                <div class="insight-dropdown">
+                  <div class="insight-header" onclick="toggleInsight(this)">
+                    <span>Insight & Deskripsi</span>
+                    <span>+</span>
+                  </div>
+                  <div class="insight-content">
+                    <p><?php echo htmlspecialchars($project['description'] ?: 'Deskripsi belum tersedia.'); ?></p>
+                    <h3>Insight</h3>
+                    <p><?php echo htmlspecialchars($project['insight'] ?: 'Tidak ada insight'); ?></p>
+                  </div>
+                </div>
+              </div>
+            </div>
+          <?php endforeach; ?>
+        </div>
+      <?php endif; ?>
     </div>
   </main>
 
@@ -532,8 +544,41 @@ if ($user_id) {
       applyPalette(savedPalette);
     }
 
+    function initStickyWA() {
+      try {
+        const n = window.AISIGHT_CONFIG?.WHATSAPP_NUMBER || '';
+        const url = n ? `https://wa.me/${n}?text=Halo%20AISight%2C%20saya%20ingin%20info%20pelatihan` : '#';
+        const a = document.getElementById('sticky-wa');
+        if (a) a.href = url;
+      } catch (e) {}
+    }
+
+    function toggleDetail(card) {
+      const details = card.querySelector('.details');
+      details.classList.toggle('show');
+    }
+
+    function toggleInsight(header) {
+      const content = header.nextElementSibling;
+      content.classList.toggle('show');
+      header.querySelector('span:last-child').textContent = content.classList.contains('show') ? '-' : '+';
+    }
+
+    function toggleFullScreen(iframe) {
+      if (iframe.requestFullscreen) {
+        iframe.requestFullscreen();
+      } else if (iframe.mozRequestFullScreen) { /* Firefox */
+        iframe.mozRequestFullScreen();
+      } else if (iframe.webkitRequestFullscreen) { /* Chrome, Safari & Opera */
+        iframe.webkitRequestFullscreen();
+      } else if (iframe.msRequestFullscreen) { /* IE/Edge */
+        iframe.msRequestFullscreen();
+      }
+    }
+
     document.addEventListener('DOMContentLoaded', () => {
       restorePreferences();
+      initStickyWA();
 
       const hamburger = document.querySelector('.hamburger');
       const navMenu = document.querySelector('.nav-menu');
