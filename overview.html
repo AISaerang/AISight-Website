@@ -35,106 +35,620 @@
       --shadow: 0 8px 24px rgba(2, 6, 23, .08);
     }
 
-    * { box-sizing: border-box; }
+    * {
+      box-sizing: border-box;
+    }
+
     body {
       margin: 0;
-      font-family: system-ui, -apple-system, sans-serif;
+      font: 16px/1.6 system-ui, -apple-system, sans-serif;
       color: var(--text);
       background: var(--bg);
       min-height: 100vh;
-      line-height: 1.6;
     }
 
-    .navbar { position: sticky; top: 0; z-index: 50; background: rgba(15, 23, 42, .6); backdrop-filter: blur(8px); border-bottom: 1px solid var(--border); }
-    body.theme-light .navbar { background: rgba(255, 255, 255, .8); }
-    .navbar .inner { max-width: var(--maxw); margin: 0 auto; display: flex; align-items: center; justify-content: space-between; padding: 14px var(--pad); gap: 16px; }
-    .brand { display: flex; align-items: center; gap: 10px; font-weight: 700; letter-spacing: .2px; }
-    .brand .dot { width: 10px; height: 10px; border-radius: 999px; background: linear-gradient(135deg, var(--accent), var(--ring)); }
-    .nav { display: flex; gap: 18px; align-items: center; margin-left: auto; }
-    .nav a { color: var(--text); opacity: .9; text-decoration: none; }
-    .nav a:hover { color: var(--accent); }
-    .controls { display: flex; gap: 10px; align-items: center; margin-left: 12px; }
+    .search-bar { margin-left: 20px; }
+    .search-bar input {
+      padding: 8px;
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      background: var(--surface);
+      color: var(--text);
+      width: 250px;
+    }
 
-    .theme-toggle { position: relative; width: 64px; height: 32px; border-radius: 999px; border: 1px solid var(--border); background: var(--card); cursor: pointer; padding: 0 6px; display: flex; align-items: center; justify-content: space-between; transition: background-color 0.3s; }
-    .theme-toggle:hover { background: var(--surface); }
-    .theme-toggle svg { width: 18px; height: 18px; opacity: 0.7; z-index: 2; }
-    .theme-toggle .thumb { position: absolute; top: 3px; left: 3px; width: 26px; height: 26px; border-radius: 999px; background: var(--accent); transition: transform 0.25s cubic-bezier(0.4, 0, 0.2, 1); z-index: 1; }
-    body.theme-light .theme-toggle .thumb { transform: translateX(32px); background: linear-gradient(180deg, #333, #555); }
+    .navbar {
+      position: sticky;
+      top: 0;
+      z-index: 50;
+      background: rgba(15, 23, 42, .6);
+      backdrop-filter: blur(8px);
+      border-bottom: 1px solid var(--border);
+    }
 
-    .palette-btn { width: 36px; height: 36px; border-radius: 10px; background: var(--card); border: 1px solid var(--border); cursor: pointer; padding: 0; display: grid; place-items: center; transition: background-color 0.3s, transform 0.2s; }
-    .palette-btn:hover { background: var(--surface); transform: scale(1.05); }
-    .palette-btn:active { transform: scale(0.95); }
-    .palette-btn svg { width: 22px; height: 22px; color: var(--text); }
-    .palette-btn::after { content: ''; position: absolute; bottom: -4px; left: 50%; transform: translateX(-50%); width: 8px; height: 8px; border-radius: 50%; background: var(--accent); border: 2px solid var(--bg); }
+    body.theme-light .navbar {
+      background: rgba(255, 255, 255, .8);
+    }
 
-    .container { max-width: var(--maxw); margin: 0 auto; padding: 0 var(--pad); }
-    .section { padding: 32px 0; }
+    .navbar .inner {
+      max-width: var(--maxw);
+      margin: 0 auto;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 14px var(--pad);
+      gap: 16px;
+    }
 
-    h1 { font-size: clamp(28px, 5vw, 40px); font-weight: 700; line-height: 1.2; margin: 0 0 16px; }
-    .sub { font-size: 18px; font-weight: 400; color: var(--muted); margin: 0 0 24px; }
+    .brand {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      font-weight: 700;
+      letter-spacing: .2px;
+      text-decoration: none;
+      color: var(--text);
+    }
 
-    /* Accordion Expand/Collapse */
+    .brand .dot {
+      width: 10px;
+      height: 10px;
+      border-radius: 999px;
+      background: linear-gradient(135deg, var(--accent), var(--ring));
+    }
+
+    .nav-menu {
+      display: flex;
+      gap: 18px;
+      align-items: center;
+    }
+
+    .nav-menu a {
+      color: var(--text);
+      opacity: .9;
+      text-decoration: none;
+      padding: 4px 8px;
+    }
+
+    .nav-menu a:hover {
+      color: var(--accent);
+    }
+
+    .dropdown {
+      position: relative;
+    }
+
+    .dropdown-toggle {
+      cursor: pointer;
+    }
+
+    .dropdown-menu {
+      display: none;
+      position: absolute;
+      top: 100%;
+      left: 0;
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      box-shadow: var(--shadow);
+      padding: 8px 0;
+      min-width: 150px;
+    }
+
+    .dropdown:hover .dropdown-menu {
+      display: block;
+    }
+
+    .dropdown-menu a {
+      display: block;
+      padding: 8px 16px;
+      color: var(--text);
+      text-decoration: none;
+    }
+
+    .dropdown-menu a:hover {
+      background: var(--surface);
+    }
+
+    .auth-buttons {
+      display: flex;
+      gap: 8px;
+    }
+
+    .btn {
+      background: var(--accent);
+      color: var(--text);
+      padding: 8px 16px;
+      border-radius: var(--radius);
+      text-decoration: none;
+    }
+
+    .btn-outline {
+      background: none;
+      border: 1px solid var(--border);
+    }
+
+    .controls {
+      display: flex;
+      gap: 10px;
+      align-items: center;
+    }
+
+    .theme-toggle {
+      position: relative;
+      width: 64px;
+      height: 32px;
+      border-radius: 999px;
+      border: 1px solid var(--border);
+      background: var(--card);
+      cursor: pointer;
+      padding: 0;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 0 6px;
+      transition: background-color 0.3s;
+    }
+
+    .theme-toggle:hover {
+      background: var(--surface);
+    }
+
+    .theme-toggle svg {
+      width: 18px;
+      height: 18px;
+      opacity: 0.7;
+      z-index: 2;
+      position: relative;
+    }
+
+    .theme-toggle .thumb {
+      position: absolute;
+      top: 3px;
+      left: 3px;
+      width: 26px;
+      height: 26px;
+      border-radius: 999px;
+      background: var(--accent);
+      transition: transform 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+      z-index: 1;
+    }
+
+    body.theme-light .theme-toggle .thumb {
+      transform: translateX(32px);
+      background: linear-gradient(180deg, #333, #555);
+    }
+
+    .palette-btn {
+      width: 36px;
+      height: 36px;
+      border-radius: 10px;
+      background: var(--card);
+      border: 1px solid var(--border);
+      cursor: pointer;
+      padding: 0;
+      display: grid;
+      place-items: center;
+      transition: background-color 0.3s, transform 0.2s;
+    }
+
+    .palette-btn:hover {
+      background: var(--surface);
+      transform: scale(1.05);
+    }
+
+    .palette-btn:active {
+      transform: scale(0.95);
+    }
+
+    .palette-btn svg {
+      width: 22px;
+      height: 22px;
+      color: var(--text);
+    }
+
+    .palette-btn::after {
+      content: '';
+      position: absolute;
+      bottom: -4px;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 8px;
+      height: 8px;
+      border-radius: 50%;
+      background: var(--accent);
+      border: 2px solid var(--bg);
+    }
+
+    .container {
+      max-width: var(--maxw);
+      margin: 0 auto;
+      padding: 48px var(--pad);
+    }
+
+    .section {
+      padding: 32px 0;
+    }
+
+    .hero {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 32px;
+      align-items: center;
+    }
+
+    .hero-visual {
+      max-width: 100%;
+    }
+
+    .hero-visual svg {
+      width: 100%;
+      height: auto;
+    }
+
+    h1 {
+      font-size: clamp(28px, 5vw, 40px);
+      line-height: 1.2;
+      margin: 0 0 16px;
+    }
+
+    .sub {
+      font-size: 18px;
+      color: var(--muted);
+      margin: 0 0 24px;
+    }
+
+    .badges {
+      display: flex;
+      gap: 12px;
+      flex-wrap: wrap;
+      margin-bottom: 24px;
+    }
+
+    .badge {
+      background: var(--card);
+      border: 1px solid var(--border);
+      padding: 8px 16px;
+      border-radius: 8px;
+      font-size: 14px;
+    }
+
+    .cta {
+      display: flex;
+      gap: 16px;
+      flex-wrap: wrap;
+    }
+
+    .sticky-cta {
+      position: fixed;
+      bottom: 24px;
+      right: 24px;
+      display: flex;
+      gap: 12px;
+      z-index: 40;
+    }
+
+    .grid-2 {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 24px;
+    }
+
+    .card {
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 24px;
+      box-shadow: var(--shadow);
+    }
+
+    .divider {
+      border: none;
+      border-top: 1px solid var(--border);
+      margin: 24px 0;
+    }
+
+    .metric-row {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 16px;
+    }
+
+    .metric {
+      text-align: center;
+    }
+
+    .metric b {
+      display: block;
+      font-size: 18px;
+    }
+
+    .list {
+      list-style: none;
+      padding: 0;
+      margin: 0;
+    }
+
+    .list li {
+      position: relative;
+      padding-left: 24px;
+      margin-bottom: 12px;
+    }
+
+    .list li::before {
+      content: '•';
+      position: absolute;
+      left: 0;
+      color: var(--accent);
+      font-size: 20px;
+    }
+
+    .testimonials {
+      position: relative;
+      overflow: hidden;
+      margin: 24px 0;
+    }
+
+    .testimonials-inner {
+      display: flex;
+      transition: transform 0.5s ease;
+    }
+
+    .testimonial {
+      flex: 0 0 33.33%;
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 24px;
+      box-shadow: var(--shadow);
+    }
+
+    .carousel-btn {
+      position: absolute;
+      top: 50%;
+      transform: translateY(-50%);
+      background: var(--accent);
+      color: var(--text);
+      border: none;
+      padding: 10px;
+      cursor: pointer;
+      z-index: 10;
+      border-radius: 50%;
+      font-size: 20px;
+    }
+
+    #prev-test {
+      left: 10px;
+    }
+
+    #next-test {
+      right: 10px;
+    }
+
+    .testimonial p {
+      font-size: 16px;
+      line-height: 1.5;
+      margin: 0 0 16px;
+      padding-bottom: 16px;
+      border-bottom: 1px solid var(--border);
+    }
+
+    .t-author {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      margin-top: 16px;
+    }
+
+    .t-author img {
+      width: 40px;
+      height: 40px;
+      border-radius: 50%;
+      object-fit: cover;
+      border: 2px solid var(--accent);
+    }
+
+    .t-author div {
+      font-size: 14px;
+    }
+
+    .t-author b {
+      font-size: 16px;
+      font-weight: 600;
+    }
+
+    .tutors {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 24px;
+      margin-top: 24px;
+    }
+
+    .tutor {
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 24px;
+      box-shadow: var(--shadow);
+      text-align: center;
+    }
+
+    .tutor img {
+      width: 80px;
+      height: 80px;
+      border-radius: 50%;
+      object-fit: cover;
+      border: 2px solid var(--accent);
+      margin-bottom: 16px;
+    }
+
+    .tutor h3 {
+      font-size: 18px;
+      margin: 0 0 8px;
+      color: var(--text);
+    }
+
+    .tutor p {
+      font-size: 14px;
+      color: var(--muted);
+      margin: 0;
+      line-height: 1.5;
+    }
+
+    .center {
+      text-align: center;
+    }
+
     .accordion { margin-bottom: 16px; }
     .accordion-header { background: var(--card); border: 1px solid var(--border); padding: 16px; cursor: pointer; display: flex; justify-content: space-between; align-items: center; border-radius: var(--radius); font-weight: 600; }
     .accordion-content { display: none; padding: 16px; background: var(--surface); border: 1px solid var(--border); border-top: none; border-radius: 0 0 var(--radius) var(--radius); }
     .accordion-content.show { display: block; }
 
-    /* Grid for Modules and Projects */
-    .grid-2 { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 24px; margin: 32px 0; }
-    .card { background: var(--card); border: 1px solid var(--border); border-radius: var(--radius); padding: 24px; box-shadow: var(--shadow); transition: transform 0.3s, box-shadow 0.3s; }
-    .card:hover { transform: translateY(-4px); box-shadow: 0 12px 36px rgba(0, 0, 0, .4); }
-    body.theme-light .card:hover { box-shadow: 0 12px 36px rgba(2, 6, 23, .12); }
-    .card-header { display: flex; align-items: center; gap: 16px; margin-bottom: 16px; }
-    .card-icon { width: 48px; height: 48px; flex-shrink: 0; }
-    .card-icon img { width: 100%; height: 100%; object-fit: contain; }
-    .card h3 { margin: 0; font-size: 20px; font-weight: 600; color: var(--text); }
-    .list { list-style: none; padding: 0; margin: 0; }
-    .list li { position: relative; padding-left: 24px; margin-bottom: 12px; font-weight: 400; color: var(--text); }
-    .list li::before { content: '•'; position: absolute; left: 0; color: var(--accent); font-size: 20px; }
-
-    /* Projects Section */
     .project-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 16px; margin-top: 16px; }
     .project-thumbnail { cursor: pointer; border: 1px solid var(--border); border-radius: var(--radius); overflow: hidden; transition: transform 0.2s; }
     .project-thumbnail:hover { transform: scale(1.05); }
     .project-thumbnail img { width: 100%; height: auto; }
     .project-thumbnail p { margin: 8px 0 0; font-size: 14px; font-weight: 400; text-align: center; color: var(--text); }
 
-    .divider { border: none; border-top: 1px solid var(--border); margin: 32px 0; }
-
-    .sticky-cta { position: fixed; bottom: 24px; right: 24px; display: flex; gap: 12px; z-index: 40; }
-    .btn { background: var(--accent); color: var(--text); padding: 12px 24px; border-radius: 8px; text-decoration: none; font-weight: 500; transition: background-color 0.3s; }
-    .btn:hover { background: var(--accent-strong); }
-    .btn.btn-outline { background: none; border: 1px solid var(--border); color: var(--text); }
-    .btn.btn-outline:hover { background: var(--surface); }
-
-    .center { text-align: center; }
+    @media (max-width: 960px) {
+      .hero {
+        grid-template-columns: 1fr;
+      }
+      .grid-2 {
+        grid-template-columns: 1fr;
+      }
+      .metric-row {
+        grid-template-columns: 1fr;
+      }
+      .testimonial {
+        flex: 0 0 100%;
+      }
+    }
 
     @media (max-width: 720px) {
-      .nav { gap: 10px; font-size: 14px; }
-      .controls { gap: 6px; }
-      .card-icon { width: 40px; height: 40px; }
-      .project-grid { grid-template-columns: 1fr; }
+      .nav-menu {
+        display: none;
+        position: absolute;
+        top: 60px;
+        right: 0;
+        flex-direction: column;
+        background: var(--card);
+        padding: 20px;
+        border-radius: var(--radius);
+        box-shadow: var(--shadow);
+        width: 200px;
+      }
+      .nav-menu.active {
+        display: flex;
+      }
+      .dropdown-menu {
+        position: static;
+        display: none;
+        width: 100%;
+        box-shadow: none;
+        border: none;
+      }
+      .dropdown.active .dropdown-menu {
+        display: block;
+      }
+      .auth-buttons {
+        flex-direction: column;
+        gap: 10px;
+      }
+      .hamburger {
+        display: block;
+        width: 30px;
+        height: 20px;
+        position: relative;
+        cursor: pointer;
+      }
+      .hamburger span {
+        position: absolute;
+        height: 3px;
+        width: 100%;
+        background: var(--text);
+        display: block;
+        transition: all 0.3s ease;
+      }
+      .hamburger span:nth-child(1) { top: 0; }
+      .hamburger span:nth-child(2) { top: 50%; transform: translateY(-50%); }
+      .hamburger span:nth-child(3) { bottom: 0; }
+      .hamburger.active span:nth-child(1) { transform: rotate(45deg) translate(5px, 5px); }
+      .hamburger.active span:nth-child(2) { opacity: 0; }
+      .hamburger.active span:nth-child(3) { transform: rotate(-45deg) translate(7px, -7px); }
+      .controls {
+        gap: 6px;
+        flex-direction: column;
+        align-items: flex-end;
+      }
+      .nav {
+        gap: 10px;
+        font-size: 14px;
+      }
+      .tutor img {
+        width: 60px;
+        height: 60px;
+      }
     }
   </style>
 </head>
 <body>
   <nav class="navbar">
     <div class="inner container">
-      <div class="brand"><span class="dot"></span> AISight</div>
-      <div class="nav">
-        <a href="index.html">Beranda</a>
-        <a href="overview.html">Kurikulum & Portfolio</a>
-        <a href="simulation.html">Kalkulator</a>
-        <a href="contact.html">Kontak</a>
+      <a href="index.html" class="brand">
+        <span class="dot"></span> AISaerang
+      </a>
+      <div class="search-bar">
+        <input type="text" id="searchInput" placeholder="Cari modul atau tutor...">
+      </div>
+      <div class="nav-menu">
+        <div class="dropdown">
+          <a href="#" class="dropdown-toggle">Jalur Belajar</a>
+          <div class="dropdown-menu">
+            <a href="overview.html">Modul</a>
+            <a href="projects.html">Portofolio</a>
+          </div>
+        </div>
+        <a href="simulation.html">Biaya</a>
+        <div class="dropdown">
+          <a href="#" class="dropdown-toggle">Lainnya</a>
+          <div class="dropdown-menu">
+            <a href="contact.html">Kontak</a>
+            <a href="blog.html">Blog</a>
+            <a href="faq.html">FAQ</a>
+          </div>
+        </div>
+      </div>
+      <div class="auth-buttons">
+        <a href="login.php" class="btn btn-outline">Masuk</a>
+        <a href="signup.php" class="btn">Daftar</a>
       </div>
       <div class="controls">
+        <button class="hamburger" aria-label="Toggle menu">
+          <span></span><span></span><span></span>
+        </button>
         <button class="theme-toggle" id="themeToggle" aria-label="Toggle theme">
-          <svg viewBox="0 0 24 24" fill="currentColor"><path d="M21 12.79A9 9 0 1 1 11.21 3a7 7 0 1 0 9.79 9.79Z"/></svg>
-          <svg viewBox="0 0 24 24" fill="currentColor"><circle cx="12" cy="12" r="5"/><line x1="12" y1="1" x2="12" y2="3" stroke="currentColor" stroke-width="2"/><line x1="12" y1="21" x2="12" y2="23" stroke="currentColor" stroke-width="2"/><line x1="4.22" y1="4.22" x2="5.64" y2="5.64" stroke="currentColor" stroke-width="2"/><line x1="18.36" y1="18.36" x2="19.78" y2="19.78" stroke="currentColor" stroke-width="2"/><line x1="1" y1="12" x2="3" y2="12" stroke="currentColor" stroke-width="2"/><line x1="21" y1="12" x2="23" y2="12" stroke="currentColor" stroke-width="2"/><line x1="4.22" y1="19.78" x2="5.64" y2="18.36" stroke="currentColor" stroke-width="2"/><line x1="18.36" y1="5.64" x2="19.78" y2="4.22" stroke="currentColor" stroke-width="2"/></svg>
+          <svg viewBox="0 0 24 24" fill="currentColor">
+            <path d="M21 12.79A9 9 0 1 1 11.21 3a7 7 0 1 0 9.79 9.79Z"/>
+          </svg>
+          <svg viewBox="0 0 24 24" fill="currentColor">
+            <circle cx="12" cy="12" r="5"/>
+            <line x1="12" y1="1" x2="12" y2="3" stroke="currentColor" stroke-width="2"/>
+            <line x1="12" y1="21" x2="12" y2="23" stroke="currentColor" stroke-width="2"/>
+            <line x1="4.22" y1="4.22" x2="5.64" y2="5.64" stroke="currentColor" stroke-width="2"/>
+            <line x1="18.36" y1="18.36" x2="19.78" y2="19.78" stroke="currentColor" stroke-width="2"/>
+            <line x1="1" y1="12" x2="3" y2="12" stroke="currentColor" stroke-width="2"/>
+            <line x1="21" y1="12" x2="23" y2="12" stroke="currentColor" stroke-width="2"/>
+            <line x1="4.22" y1="19.78" x2="5.64" y2="18.36" stroke="currentColor" stroke-width="2"/>
+            <line x1="18.36" y1="5.64" x2="19.78" y2="4.22" stroke="currentColor" stroke-width="2"/>
+          </svg>
           <span class="thumb"></span>
         </button>
         <button class="palette-btn" id="paletteBtn" aria-label="Change accent color">
-          <svg viewBox="0 0 24 24" width="22" height="22" fill="currentColor"><path d="M14.7 3.3a1 1 0 0 1 1.4 0l4.6 4.6a1 1 0 0 1 0 1.4l-6.8 6.8a5 5 0 0 1-2.95 1.43c-.66.07-1.3.36-1.77.83l-.9.9a2 2 0 0 1-2.83 0 2 2 0 0 1 0-2.83l.9-.9c.47-.47.76-1.11.83-1.77A5 5 0 0 1 8.9 10.1l6.8-6.8a1 1 0 0 1 1.4 0z"/><circle cx="19" cy="19" r="2"/></svg>
+          <svg viewBox="0 0 24 24" width="22" height="22" fill="currentColor">
+            <path d="M14.7 3.3a1 1 0 0 1 1.4 0l4.6 4.6a1 1 0 0 1 0 1.4l-6.8 6.8a5 5 0 0 1-2.95 1.43c-.66.07-1.3.36-1.77.83l-.9.9a2 2 0 0 1-2.83 0 2 2 0 0 1 0-2.83l.9-.9c.47-.47.76-1.11.83-1.77A5 5 0 0 1 8.9 10.1l6.8-6.8a1 1 0 0 1 1.4 0z"/>
+            <circle cx="19" cy="19" r="2"/>
+          </svg>
         </button>
       </div>
     </div>
@@ -274,16 +788,7 @@
             </div>
             <div class="accordion-content">
               <p>Link Portfolio Lengkap: <a href="https://sarah.tech">sarah.tech</a></p>
-              <div class="project-grid">
-                <div class="project-thumbnail" data-url="https://app.powerbi.com/view?r=eyJrIjoiYWE4NmE3MjctYmQyOS00NGQ2LWI1MWMtOTE0Njg5MGYzOTA3IiwidCI6ImRmODY3OWNkLWE4MGUtNDVkOC05OWFjLWM4M2VkN2ZmOTVhMCJ9">
-                  <img src="assets/img/projects/project1-thumbnail.jpg" alt="Project 1">
-                  <p>Project 1: Penjualan</p>
-                </div>
-                <div class="project-thumbnail" data-url="https://app.powerbi.com/view?r=eyJrIjoiNDZiNjA2ZmQtYzQwNC00ZGI0LWI0MjQtYjA3ZmQ0YzAwYjJjIiwidCI6ImRmODY3OWNkLWE4MGUtNDVkOC05OWFjLWM4M2VkN2ZmOTVhMCJ9">
-                  <img src="assets/img/projects/project2-thumbnail.jpg" alt="Project 2">
-                  <p>Project 2: Analisis Pasar</p>
-                </div>
-              </div>
+              <div class="project-grid" id="tutor-projects-sarah"></div>
             </div>
           </div>
           <div class="accordion">
@@ -293,12 +798,7 @@
             </div>
             <div class="accordion-content">
               <p>Link Portfolio Lengkap: <a href="https://rudi.tech">rudi.tech</a></p>
-              <div class="project-grid">
-                <div class="project-thumbnail" data-url="https://app.powerbi.com/view?r=eyJrIjoiYzAwYjA2YzQtYzA0NC00YzI0LWJjNDItYjA3ZmQ0YzAwYjJjIiwidCI6ImRmODY3OWNkLWE4MGUtNDVkOC05OWFjLWM4M2VkN2ZmOTVhMCJ9">
-                  <img src="assets/img/projects/project3-thumbnail.jpg" alt="Project 3">
-                  <p>Project 3: Laporan Keuangan</p>
-                </div>
-              </div>
+              <div class="project-grid" id="tutor-projects-rudi"></div>
             </div>
           </div>
 
@@ -310,12 +810,7 @@
             </div>
             <div class="accordion-content">
               <p>Link Portfolio Lengkap: <a href="https://murid_a.tech">murid_a.tech</a></p>
-              <div class="project-grid">
-                <div class="project-thumbnail" data-url="https://app.powerbi.com/view?r=eyJrIjoiMzIzYmQ3YWEtYmIzNS00MDAzLWIzZGUtOTM5NDUxYTMwZGQ1IiwidCI6ImRmODY3OWNkLWE4MGUtNDVkOC05OWFjLWM4M2VkN2ZmOTVhMCJ9">
-                  <img src="assets/img/projects/project4-thumbnail.jpg" alt="Project 4">
-                  <p>Project 4: Marketing</p>
-                </div>
-              </div>
+              <div class="project-grid" id="student-projects-murid-a"></div>
             </div>
           </div>
           <div class="accordion">
@@ -325,12 +820,7 @@
             </div>
             <div class="accordion-content">
               <p>Link Portfolio Lengkap: <a href="https://murid_b.tech">murid_b.tech</a></p>
-              <div class="project-grid">
-                <div class="project-thumbnail" data-url="https://app.powerbi.com/view?r=eyJrIjoiN2ZmYjA2YzQtYzA0NC00YzI0LWJjNDItYjA3ZmQ0YzAwYjJjIiwidCI6ImRmODY3OWNkLWE4MGUtNDVkOC05OWFjLWM4M2VkN2ZmOTVhMCJ9">
-                  <img src="assets/img/projects/project5-thumbnail.jpg" alt="Project 5">
-                  <p>Project 5: Analisis Penjualan</p>
-                </div>
-              </div>
+              <div class="project-grid" id="student-projects-murid-b"></div>
             </div>
           </div>
         </div>
@@ -343,7 +833,11 @@
   </footer>
 
   <script>
-    const PALETTES = { teal: { accent: '#14B8A6', strong: '#0F766E', ring: '#22D3EE' }, violet: { accent: '#7C3AED', strong: '#5B21B6', ring: '#8B5CF6' }, orange: { accent: '#FB923C', strong: '#C2410C', ring: '#FDBA74' } };
+    const PALETTES = {
+      teal: { accent: '#14B8A6', strong: '#0F766E', ring: '#22D3EE' },
+      violet: { accent: '#7C3AED', strong: '#5B21B6', ring: '#8B5CF6' },
+      orange: { accent: '#FB923C', strong: '#C2410C', ring: '#FDBA74' }
+    };
     const PALETTE_ORDER = ['teal', 'violet', 'orange'];
     let currentPaletteIndex = 0;
 
@@ -360,20 +854,23 @@
     }
 
     const themeToggle = document.getElementById('themeToggle');
-    themeToggle.addEventListener('click', () => {
+    themeToggle.addEventListener('click', function() {
       const isLight = document.body.classList.toggle('theme-light');
       localStorage.setItem('theme', isLight ? 'light' : 'dark');
     });
 
     const paletteBtn = document.getElementById('paletteBtn');
-    paletteBtn.addEventListener('click', () => {
+    paletteBtn.addEventListener('click', function() {
       currentPaletteIndex = (currentPaletteIndex + 1) % PALETTE_ORDER.length;
-      applyPalette(PALETTE_ORDER[currentPaletteIndex]);
+      const newPalette = PALETTE_ORDER[currentPaletteIndex];
+      applyPalette(newPalette);
     });
 
     function restorePreferences() {
       const savedTheme = localStorage.getItem('theme');
-      if (savedTheme === 'light') document.body.classList.add('theme-light');
+      if (savedTheme === 'light') {
+        document.body.classList.add('theme-light');
+      }
       const savedPalette = localStorage.getItem('palette') || 'teal';
       applyPalette(savedPalette);
     }
@@ -382,7 +879,8 @@
       try {
         const n = window.AISIGHT_CONFIG?.WHATSAPP_NUMBER || '';
         const url = n ? `https://wa.me/${n}?text=Halo%20AISight%2C%20saya%20ingin%20info%20pelatihan` : '#';
-        document.getElementById('sticky-wa').href = url;
+        const a = document.getElementById('sticky-wa');
+        if (a) a.href = url;
       } catch (e) {}
     }
 
@@ -392,18 +890,96 @@
       header.querySelector('span').textContent = content.classList.contains('show') ? '-' : '+';
     }
 
-    document.querySelectorAll('.project-thumbnail').forEach(thumbnail => {
-      thumbnail.addEventListener('click', () => {
-        const url = thumbnail.getAttribute('data-url');
-        const projectName = thumbnail.querySelector('p').textContent;
-        const tutor = thumbnail.closest('.accordion-content').previousElementSibling.querySelector('h4').textContent;
-        window.location.href = `projects.html?tutor=${encodeURIComponent(tutor)}&project=${encodeURIComponent(projectName)}&url=${encodeURIComponent(url)}`;
+    // Fetch projects from overview.php
+    async function fetchProjects() {
+      try {
+        const response = await fetch('overview.php');
+        const text = await response.text();
+        const parser = new DOMParser();
+        const doc = parser.parseFromString(text, 'text/html');
+        const thumbnails = doc.querySelectorAll('.project-thumbnail');
+
+        thumbnails.forEach(thumbnail => {
+          const name = thumbnail.querySelector('p').textContent.split(' - ')[0];
+          const tutor = thumbnail.querySelector('p').textContent.split(' - ')[1];
+          const thumbnailUrl = thumbnail.querySelector('img').src;
+          const projectId = thumbnail.getAttribute('data-url').split('id=')[1];
+
+          let containerId = '';
+          if (tutor === 'Sarah') containerId = 'tutor-projects-sarah';
+          else if (tutor === 'Rudi') containerId = 'tutor-projects-rudi';
+          else if (tutor === 'Murid A') containerId = 'student-projects-murid-a';
+          else if (tutor === 'Murid B') containerId = 'student-projects-murid-b';
+
+          if (containerId) {
+            const container = document.getElementById(containerId);
+            if (container) {
+              container.innerHTML += `
+                <div class="project-thumbnail" data-url="projects.html?id=${projectId}&tutor=${encodeURIComponent(tutor)}&project=${encodeURIComponent(name)}">
+                  <img src="${thumbnailUrl}" alt="${name}">
+                  <p>${name}</p>
+                </div>
+              `;
+            }
+          }
+        });
+
+        // Add click event to project thumbnails
+        document.querySelectorAll('.project-thumbnail').forEach(thumbnail => {
+          thumbnail.addEventListener('click', () => {
+            const url = thumbnail.getAttribute('data-url');
+            window.location.href = url;
+          });
+        });
+      } catch (error) {
+        console.error('Error fetching projects:', error);
+      }
+    }
+
+    // Search functionality
+    document.getElementById('searchInput').addEventListener('input', (e) => {
+      const query = e.target.value.toLowerCase();
+      const elements = document.querySelectorAll('h2, h3, h4, p, li');
+      elements.forEach(el => {
+        const text = el.textContent.toLowerCase();
+        if (text.includes(query) && query) {
+          el.style.backgroundColor = 'yellow';
+          el.scrollIntoView({ behavior: 'smooth' });
+        } else {
+          el.style.backgroundColor = '';
+        }
       });
     });
 
     document.addEventListener('DOMContentLoaded', () => {
       restorePreferences();
       initStickyWA();
+      fetchProjects();
+
+      const hamburger = document.querySelector('.hamburger');
+      const navMenu = document.querySelector('.nav-menu');
+      const dropdowns = document.querySelectorAll('.dropdown');
+
+      hamburger.addEventListener('click', () => {
+        hamburger.classList.toggle('active');
+        navMenu.classList.toggle('active');
+      });
+
+      dropdowns.forEach(dropdown => {
+        const toggle = dropdown.querySelector('.dropdown-toggle');
+        toggle.addEventListener('click', (e) => {
+          e.preventDefault();
+          dropdown.classList.toggle('active');
+        });
+      });
+
+      document.addEventListener('click', (e) => {
+        if (!navMenu.contains(e.target) && !hamburger.contains(e.target)) {
+          navMenu.classList.remove('active');
+          hamburger.classList.remove('active');
+          dropdowns.forEach(d => d.classList.remove('active'));
+        }
+      });
     });
   </script>
 </body>

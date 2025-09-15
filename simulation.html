@@ -1,12 +1,12 @@
 <!DOCTYPE html>
 <html lang="id">
 <head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta name="description" content="Simulasikan total jam, harga per orang, diskon, dan total grup untuk paket pelatihan AISight."/>
   <meta property="og:title" content="AISight — Kalkulator Paket"/>
   <meta property="og:description" content="Simulasikan total jam, harga per orang, diskon, dan total grup untuk paket pelatihan AISight."/>
   <meta property="og:type" content="website"/>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>AISight — Kalkulator Paket</title>
   <style>
     :root {
@@ -35,10 +35,7 @@
       --shadow: 0 8px 24px rgba(2, 6, 23, .08);
     }
 
-    * {
-      box-sizing: border-box;
-    }
-
+    * { box-sizing: border-box; }
     body {
       margin: 0;
       font: 16px/1.6 system-ui, -apple-system, sans-serif;
@@ -76,6 +73,8 @@
       gap: 10px;
       font-weight: 700;
       letter-spacing: .2px;
+      text-decoration: none;
+      color: var(--text);
     }
 
     .brand .dot {
@@ -85,28 +84,92 @@
       background: linear-gradient(135deg, var(--accent), var(--ring));
     }
 
-    .nav {
+    .nav-menu {
       display: flex;
       gap: 18px;
       align-items: center;
-      margin-left: auto;
     }
 
-    .nav a {
+    .nav-menu a {
       color: var(--text);
       opacity: .9;
       text-decoration: none;
+      padding: 4px 8px;
     }
 
-    .nav a:hover {
+    .nav-menu a:hover {
       color: var(--accent);
+    }
+
+    .dropdown {
+      position: relative;
+    }
+
+    .dropdown-toggle {
+      cursor: pointer;
+    }
+
+    .dropdown-menu {
+      display: none;
+      position: absolute;
+      top: 100%;
+      left: 0;
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      box-shadow: var(--shadow);
+      padding: 8px 0;
+      min-width: 150px;
+    }
+
+    .dropdown:hover .dropdown-menu {
+      display: block;
+    }
+
+    .dropdown-menu a {
+      display: block;
+      padding: 8px 16px;
+      color: var(--text);
+      text-decoration: none;
+    }
+
+    .dropdown-menu a:hover {
+      background: var(--surface);
+    }
+
+    .auth-buttons {
+      display: flex;
+      gap: 8px;
+    }
+
+    .btn {
+      background: var(--accent);
+      color: var(--text);
+      padding: 8px 16px;
+      border-radius: var(--radius);
+      text-decoration: none;
+      font-weight: 500;
+      transition: background-color 0.3s;
+    }
+
+    .btn:hover {
+      background: var(--accent-strong);
+    }
+
+    .btn.btn-outline {
+      background: none;
+      border: 1px solid var(--border);
+      color: var(--text);
+    }
+
+    .btn.btn-outline:hover {
+      background: var(--surface);
     }
 
     .controls {
       display: flex;
       gap: 10px;
       align-items: center;
-      margin-left: 12px;
     }
 
     .theme-toggle {
@@ -302,34 +365,6 @@
       z-index: 40;
     }
 
-    .btn {
-      background: var(--accent);
-      color: var(--text);
-      padding: 12px 24px;
-      border-radius: 8px;
-      text-decoration: none;
-      font-weight: 500;
-      transition: background-color 0.3s;
-    }
-
-    .btn:hover {
-      background: var(--accent-strong);
-    }
-
-    .btn.btn-outline {
-      background: none;
-      border: 1px solid var(--border);
-      color: var(--text);
-    }
-
-    .btn.btn-outline:hover {
-      background: var(--surface);
-    }
-
-    .center {
-      text-align: center;
-    }
-
     #output {
       display: flex;
       flex-direction: column;
@@ -353,30 +388,77 @@
     }
 
     @media (max-width: 720px) {
-      .nav {
-        gap: 10px;
-        font-size: 14px;
+      .nav-menu {
+        display: none;
+        position: absolute;
+        top: 60px;
+        right: 0;
+        flex-direction: column;
+        background: var(--card);
+        padding: 20px;
+        border-radius: var(--radius);
+        box-shadow: var(--shadow);
+        width: 200px;
       }
-      .controls {
-        gap: 6px;
+      .nav-menu.active {
+        display: flex;
       }
-      select {
-        font-size: 14px;
+      .hamburger {
+        display: block;
+        width: 30px;
+        height: 20px;
+        position: relative;
+        cursor: pointer;
       }
+      .hamburger span {
+        position: absolute;
+        height: 3px;
+        width: 100%;
+        background: var(--text);
+        display: block;
+        transition: all 0.3s ease;
+      }
+      .hamburger span:nth-child(1) { top: 0; }
+      .hamburger span:nth-child(2) { top: 50%; transform: translateY(-50%); }
+      .hamburger span:nth-child(3) { bottom: 0; }
+      .hamburger.active span:nth-child(1) { transform: rotate(45deg) translate(5px, 5px); }
+      .hamburger.active span:nth-child(2) { opacity: 0; }
+      .hamburger.active span:nth-child(3) { transform: rotate(-45deg) translate(7px, -7px); }
     }
   </style>
 </head>
 <body>
   <nav class="navbar">
     <div class="inner container">
-      <div class="brand"><span class="dot"></span> AISight</div>
-      <div class="nav">
-        <a href="index.html">Beranda</a>
-        <a href="overview.html">Kurikulum & Portfolio</a>
-        <a href="simulation.html">Kalkulator</a>
-        <a href="contact.html">Kontak</a>
+      <a href="index.html" class="brand">
+        <span class="dot"></span> AISight
+      </a>
+      <div class="nav-menu">
+        <div class="dropdown">
+          <a href="#" class="dropdown-toggle">Jalur Belajar</a>
+          <div class="dropdown-menu">
+            <a href="overview.html">Modul</a>
+            <a href="projects.html">Portofolio</a>
+          </div>
+        </div>
+        <a href="simulation.html">Biaya</a>
+        <div class="dropdown">
+          <a href="#" class="dropdown-toggle">Lainnya</a>
+          <div class="dropdown-menu">
+            <a href="contact.html">Kontak</a>
+            <a href="blog.html">Blog</a>
+            <a href="faq.html">FAQ</a>
+          </div>
+        </div>
+      </div>
+      <div class="auth-buttons">
+        <a href="login.php" class="btn btn-outline">Masuk</a>
+        <a href="signup.php" class="btn">Daftar</a>
       </div>
       <div class="controls">
+        <button class="hamburger" aria-label="Toggle menu">
+          <span></span><span></span><span></span>
+        </button>
         <button class="theme-toggle" id="themeToggle" aria-label="Toggle theme">
           <svg viewBox="0 0 24 24" fill="currentColor">
             <path d="M21 12.79A9 9 0 1 1 11.21 3a7 7 0 1 0 9.79 9.79Z"/>
@@ -420,9 +502,9 @@
           <div style="margin-bottom: 24px;">
             <label for="package">Paket</label>
             <select id="package">
-              <option value="Specialize">Specialize</option>
-              <option value="Regular">Regular</option>
-              <option value="Advance">Advance</option>
+              <option value="Specialize">Specialize (50 jam)</option>
+              <option value="Regular">Regular (30 jam)</option>
+              <option value="Advance">Advance (70 jam)</option>
             </select>
           </div>
           <div style="margin-bottom: 24px;">
@@ -450,7 +532,6 @@
     <div class="container center muted">&copy; 2025 AISight. Semua hak dilindungi.</div>
   </footer>
 
-  <script src="assets/js/main.js"></script>
   <script>
     const PALETTES = {
       teal: { accent: '#14B8A6', strong: '#0F766E', ring: '#22D3EE' },
@@ -497,15 +578,75 @@
     function initStickyWA() {
       try {
         const n = window.AISIGHT_CONFIG?.WHATSAPP_NUMBER || '';
-        const url = n ? `https://wa.me/${n}?text=Halo%20AISight%2C%20saya%20ingin%20info%20pelatihan` : '#';
+        const url = n ? `https://wa.me/${n}?text=Halo%20AISight,%20saya%20ingin%20info%20pelatihan` : '#';
         const a = document.getElementById('sticky-wa');
         if (a) a.href = url;
       } catch (e) {}
     }
 
+    const packages = {
+      Specialize: { hours: 50, pricePerHour: 150000, discount: 0.1, modules: ['Data Visualization', 'Advanced Analytics'] },
+      Regular: { hours: 30, pricePerHour: 100000, discount: 0.05, modules: ['Data Basics', 'Visualization'] },
+      Advance: { hours: 70, pricePerHour: 200000, discount: 0.15, modules: ['AI Integration', 'Data Science', 'Visualization'] }
+    };
+
+    function updateSimulation() {
+      const package = document.getElementById('package').value;
+      const scenario = document.getElementById('scenario').value;
+      const pkg = packages[package];
+      const output = document.getElementById('output');
+      const modulesList = document.getElementById('modules-list');
+
+      let groupSize = 1;
+      if (scenario.includes('Group of')) {
+        groupSize = parseInt(scenario.match(/\d+/)[0]);
+      }
+      const totalPricePerPerson = pkg.hours * pkg.pricePerHour;
+      const totalPrice = totalPricePerPerson * groupSize;
+      const discountAmount = totalPrice * pkg.discount;
+      const finalPrice = totalPrice - discountAmount;
+
+      modulesList.innerHTML = pkg.modules.map(mod => `<li>${mod}</li>`).join('');
+      output.innerHTML = `
+        <h3>Hasil Simulasi</h3>
+        <p>Total Jam: <span class="highlight">${pkg.hours}</span> jam</p>
+        <p>Harga per Orang: <span class="highlight">${totalPricePerPerson.toLocaleString('id-ID', { style: 'currency', currency: 'IDR' })}</span></p>
+        <p>Diskon: <span class="highlight">${(pkg.discount * 100).toFixed(0)}%</span> (<span class="highlight">${discountAmount.toLocaleString('id-ID', { style: 'currency', currency: 'IDR' })}</span>)</p>
+        <p>Total Grup (${scenario}): <span class="highlight">${finalPrice.toLocaleString('id-ID', { style: 'currency', currency: 'IDR' })}</span></p>
+      `;
+    }
+
     document.addEventListener('DOMContentLoaded', () => {
       restorePreferences();
       initStickyWA();
+      document.getElementById('package').addEventListener('change', updateSimulation);
+      document.getElementById('scenario').addEventListener('change', updateSimulation);
+      updateSimulation();
+
+      const hamburger = document.querySelector('.hamburger');
+      const navMenu = document.querySelector('.nav-menu');
+      const dropdowns = document.querySelectorAll('.dropdown');
+
+      hamburger.addEventListener('click', () => {
+        hamburger.classList.toggle('active');
+        navMenu.classList.toggle('active');
+      });
+
+      dropdowns.forEach(dropdown => {
+        const toggle = dropdown.querySelector('.dropdown-toggle');
+        toggle.addEventListener('click', (e) => {
+          e.preventDefault();
+          dropdown.classList.toggle('active');
+        });
+      });
+
+      document.addEventListener('click', (e) => {
+        if (!navMenu.contains(e.target) && !hamburger.contains(e.target)) {
+          navMenu.classList.remove('active');
+          hamburger.classList.remove('active');
+          dropdowns.forEach(d => d.classList.remove('active'));
+        }
+      });
     });
   </script>
 </body>
