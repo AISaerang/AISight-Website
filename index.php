@@ -16,6 +16,10 @@ if (isset($_SESSION['message'])) {
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>AISight — Pelatihan Data Analytics & Power BI</title>
+
+  <!-- (Opsional) jika kamu memang pakai style.css global -->
+  <!-- <link rel="stylesheet" href="style.css"> -->
+
   <style>
     :root{
       --bg:#0B1220;--surface:#0F172A;--card:#111827;--border:#1F2937;--text:#E6E8EC;--muted:#9CA3AF;
@@ -76,14 +80,12 @@ if (isset($_SESSION['message'])) {
     .theme-toggle svg{width:18px;height:18px;opacity:.8;color:var(--muted);z-index:2}
     .theme-toggle .thumb{
       position:absolute;top:3px;left:3px;width:26px;height:26px;border-radius:999px;background:var(--accent);
-      transition:transform .25s cubic-bezier(.4,0,.2,1), background-color .25s;box-shadow:inset 0 0 0 2px rgba(0,0,0,.12)
+      transition:transform .25s cubic-bezier(.4,0,.2,1), background-color .25s;
+      box-shadow:inset 0 0 0 2px rgba(0,0,0,.12), 0 2px 6px rgba(0,0,0,.25);
     }
-    /* Saat light mode, tombol geser ke kanan – tetap warna accent */
     body.theme-light .theme-toggle .thumb{transform:translateX(32px)}
-    /* Jejak warna track tipis sesuai tema */
     .theme-toggle::after{
-      content:"";position:absolute;inset:0;border-radius:999px;background:linear-gradient(90deg,rgba(0,0,0,.06),rgba(0,0,0,0));
-      opacity:.25;pointer-events:none
+      content:"";position:absolute;inset:0;border-radius:999px;background:linear-gradient(90deg,rgba(0,0,0,.06),rgba(0,0,0,0));opacity:.25;pointer-events:none
     }
 
     .palette-btn{
@@ -111,7 +113,9 @@ if (isset($_SESSION['message'])) {
     .divider{border:none;border-top:1px solid var(--border);margin:20px 0}
     .metric-row{display:grid;grid-template-columns:repeat(2,1fr);gap:12px}
     .metric{text-align:center}.metric b{font-size:16px}
-    .list{list-style:none;padding:0;margin:0}.list li{padding-left:20px;margin-bottom:10px}.list li::before{content:"•";position:absolute;left:0;color:var(--accent);font-size:18px}
+    .list{list-style:none;padding:0;margin:0}
+    .list li{position:relative;padding-left:20px;margin-bottom:10px}
+    .list li::before{content:"•";position:absolute;left:0;color:var(--accent);font-size:18px;line-height:1;top:2px}
 
     /* ====== TESTI ====== */
     .testimonials{position:relative;overflow:hidden;margin:20px 0}
@@ -159,56 +163,62 @@ if (isset($_SESSION['message'])) {
       .testimonial{flex:0 0 100%}
     }
 
-    /* --- MOBILE NAV LAYOUT persis sesuai permintaan --- */
+    /* --- MOBILE NAV LAYOUT (persis permintaan) --- */
     @media (max-width:720px){
-      /* Ubah layout navbar jadi grid 2 kolom 2 baris:
-         baris1: brand | auth (pojok kanan atas)
-         baris2: search | controls (ikon di bawah auth) */
-    /* Susunan 2 baris, 2 kolom:
-   baris-1: brand | auth
-   baris-2: search | controls (sejajar satu baris) */
-.navbar .inner{
-  display:grid;
-  grid-template-columns: 1fr auto;
-  grid-template-areas:
-    "brand auth"
-    "search controls";
-  row-gap: 8px;
-  align-items: center;          /* samakan baseline */
-}
+      .navbar .inner{
+        position:relative;                 /* anchor utk nav-menu absolute */
+        display:grid;
+        grid-template-columns: 1fr auto;
+        grid-template-areas:
+          "brand auth"
+          "search controls";
+        row-gap:8px;
+        align-items:center;
+      }
+      .brand{ grid-area: brand; }
+      .auth-buttons{ grid-area: auth; justify-self: end; }
+      .search-bar{ grid-area: search; margin-left:0; width:100%; }
+      .search-bar input{ width:min(80vw,320px); max-width:none; padding:8px 12px; }
+      .controls{
+        grid-area: controls;
+        justify-self: end;
+        display:flex;
+        flex-direction: row;
+        align-items: center;
+        gap: 10px;
+      }
 
-/* Search bar jadi satu baris dengan controls */
-.search-bar{ grid-area: search; margin-left:0; width:100%; }
-.search-bar input{ width:100%; max-width:none; padding:8px 12px; }
+      /* Hamburger tampil mobile */
+      .hamburger{display:block;width:28px;height:18px;position:relative;cursor:pointer;background:none;border:none}
+      .hamburger span{position:absolute;height:2px;width:100%;background:var(--text);transition:all .3s ease}
+      .hamburger span:nth-child(1){top:0}
+      .hamburger span:nth-child(2){top:50%;transform:translateY(-50%)}
+      .hamburger span:nth-child(3){bottom:0}
+      .hamburger.active span:nth-child(1){transform:rotate(45deg) translate(5px,5px)}
+      .hamburger.active span:nth-child(2){opacity:0}
+      .hamburger.active span:nth-child(3){transform:rotate(-45deg) translate(7px,-7px)}
 
-/* Controls horizontal (hamburger → toggle → palette) */
-.controls{
-  grid-area: controls;
-  justify-self: end;
-  display:flex;
-  flex-direction: row;          /* <— ini kuncinya */
-  align-items: center;
-  gap: 10px;
-}
+      /* Menu dropdown muncul di bawah bar */
+      .nav-menu{
+        display:none;
+        position:absolute;
+        top: calc(100% + 8px);
+        right: 0;
+        flex-direction:column;
+        background:var(--card);
+        border:1px solid var(--border);
+        border-radius:var(--radius);
+        padding:16px;
+        gap:12px;
+        box-shadow:var(--shadow);
+        width:200px;
+      }
+      .nav-menu.active{display:flex}
 
-/* Hamburger tetap tampil di mobile */
-.hamburger{
-  display:block;
-  width:28px; height:18px; position:relative; cursor:pointer; background:none; border:none;
-}
-.hamburger span{
-  position:absolute; height:2px; width:100%; background:var(--text); transition:all .3s ease;
-}
-.hamburger span:nth-child(1){ top:0; }
-.hamburger span:nth-child(2){ top:50%; transform:translateY(-50%); }
-.hamburger span:nth-child(3){ bottom:0; }
-.hamburger.active span:nth-child(1){ transform:rotate(45deg) translate(5px,5px); }
-.hamburger.active span:nth-child(2){ opacity:0; }
-.hamburger.active span:nth-child(3){ transform:rotate(-45deg) translate(7px,-7px); }
-
-/* (opsional) rapikan menu link di mobile */
-.nav-menu{ display:none; }
-
+      .dropdown-menu{position:static;display:none;width:100%;box-shadow:none;border:none}
+      .dropdown.active .dropdown-menu{display:block}
+      .auth-buttons{flex-direction:column;gap:8px}
+    } /* <<— tutup @media dengan benar */
 
     @keyframes fadeIn{from{opacity:0;transform:scale(.98)}to{opacity:1;transform:scale(1)}}
   </style>
@@ -482,7 +492,7 @@ if (isset($_SESSION['message'])) {
       applyPalette(PALETTE_ORDER[currentPaletteIndex]);
     });
     function restorePreferences(){
-      const t = localStorage.getItem('theme'); if(t==='light') document.body.classList.add('theme-light');
+      const t = localStorage.getItem('theme'); if(t==='light') document.body.classList.add('theme-light'); else document.body.classList.remove('theme-light');
       applyPalette(localStorage.getItem('palette') || 'teal');
     }
 
