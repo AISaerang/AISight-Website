@@ -7,13 +7,13 @@ session_start();
 <!DOCTYPE html>
 <html lang="id">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta name="description" content="Daftar project terbaru dari tutor dan murid AISight."/>
-  <meta property="og:title" content="AISight — Daftar Projects"/>
-  <meta property="og:description" content="Daftar project terbaru dari tutor dan murid AISight."/>
+  <meta name="description" content="Kurikulum pembelajaran AISight dari Excel, SQL, hingga web portfolio."/>
+  <meta property="og:title" content="AISight — Kurikulum"/>
+  <meta property="og:description" content="Kurikulum pembelajaran AISight dari Excel, SQL, hingga web portfolio."/>
   <meta property="og:type" content="website"/>
-  <title>AISight — Daftar Projects</title>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>AISight — Kurikulum</title>
   <style>
     :root {
       --bg: #0B1220;
@@ -505,19 +505,41 @@ session_start();
       text-align: center;
     }
 
-    @media (max-width: 960px) {
-      .hero {
-        grid-template-columns: 1fr;
-      }
-      .grid-2 {
-        grid-template-columns: 1fr;
-      }
-      .metric-row {
-        grid-template-columns: 1fr;
-      }
-      .testimonial {
-        flex: 0 0 100%;
-      }
+    .project-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      gap: 16px;
+      margin-top: 16px;
+    }
+
+    .project-thumbnail {
+      cursor: pointer;
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      overflow: hidden;
+      transition: transform 0.2s;
+    }
+
+    .project-thumbnail:hover {
+      transform: scale(1.05);
+    }
+
+    .project-thumbnail img {
+      width: 100%;
+      height: auto;
+    }
+
+    .project-thumbnail p {
+      margin: 8px 0 0;
+      font-size: 14px;
+      font-weight: 400;
+      text-align: center;
+      color: var(--text);
+    }
+
+    .no-results {
+      text-align: center;
+      color: var(--muted);
     }
 
     @media (max-width: 720px) {
@@ -754,106 +776,32 @@ session_start();
       } catch (e) {}
     }
 
-    const testimonialsData = [
-      {
-        text: "“Materinya terkurasi sesuai kebutuhan industri. Setelah kelas, aku membangun dashboard KPI marketing yang langsung dipakai tim.”",
-        author: "Rina",
-        role: "Marketing Analyst",
-        avatar: "assets/img/rina.jpg"
-      },
-      {
-        text: "“DAX yang tadinya bikin pusing jadi kebuka karena contoh kasusnya realistis. Review tugasnya detail dan actionable.”",
-        author: "Fajar",
-        role: "Business Intelligence",
-        avatar: "assets/img/fajar.jpg"
-      },
-      {
-        text: "“Portfolio web jadi nilai jual saat apply kerja. Skillset-nya langsung kepakai di tim data kami. Highly recommended.”",
-        author: "Andi",
-        role: "Fresh Graduate",
-        avatar: "assets/img/andi.jpg"
-      },
-      {
-        text: "“Pelatihan ini sangat membantu dalam meningkatkan kemampuan analisis data saya. Mentornya sangat berpengalaman.”",
-        author: "Siti",
-        role: "Data Analyst",
-        avatar: "assets/img/siti.jpg"
-      },
-      {
-        text: "“Sangat puas dengan kurikulum yang relevan dengan industri. Bonus domain portfolio sangat berguna.”",
-        author: "Budi",
-        role: "Professional",
-        avatar: "assets/img/budi.jpg"
-      },
-      {
-        text: "“Rekomendasi tinggi untuk fresh grad. Mentoring review portfolio membuat CV saya lebih menonjol.”",
-        author: "Dewi",
-        role: "Fresh Graduate",
-        avatar: "assets/img/dewi.jpg"
-      }
-    ];
-
-    function initTestimonials() {
-      const inner = document.querySelector('.testimonials-inner');
-      testimonialsData.forEach(data => {
-        const testimonial = document.createElement('div');
-        testimonial.classList.add('testimonial');
-        testimonial.innerHTML = `
-          <p>${data.text}</p>
-          <div class="t-author">
-            <img src="${data.avatar}" alt="${data.author}, ${data.role}" />
-            <div>
-              <b>${data.author}</b><br>
-              <span class="muted">${data.role}</span>
-            </div>
-          </div>
-        `;
-        inner.appendChild(testimonial);
+    // Search functionality
+    document.getElementById('searchInput').addEventListener('input', (e) => {
+      const query = e.target.value.toLowerCase();
+      const elements = document.querySelectorAll('.project-thumbnail p');
+      elements.forEach(el => {
+        const text = el.textContent.toLowerCase();
+        const thumbnail = el.parentElement;
+        thumbnail.style.display = text.includes(query) ? 'block' : 'none';
       });
+    });
 
-      const container = document.getElementById('testimonials-carousel');
-      const items = inner.querySelectorAll('.testimonial');
-      if (items.length === 0) return;
-
-      const itemWidth = items[0].offsetWidth;
-      let current = 0;
-      const perView = window.innerWidth <= 960 ? 1 : 3;
-      const max = items.length - perView;
-
-      document.getElementById('prev-test').addEventListener('click', () => {
-        if (current > 0) {
-          current--;
-          inner.style.transform = `translateX(-${current * itemWidth}px)`;
-        }
+    // Click event for thumbnails
+    document.querySelectorAll('.project-thumbnail').forEach(thumbnail => {
+      thumbnail.addEventListener('click', () => {
+        const url = thumbnail.getAttribute('data-url');
+        window.location.href = url;
       });
-
-      document.getElementById('next-test').addEventListener('click', () => {
-        if (current < max) {
-          current++;
-          inner.style.transform = `translateX(-${current * itemWidth}px)`;
-        }
-      });
-    }
-
-    function toggleProfileDropdown() {
-      const profileImg = document.getElementById('profileImg');
-      const menu = profileImg.nextElementSibling;
-      if (menu.style.display === 'block') {
-        menu.style.display = 'none';
-      } else {
-        menu.style.display = 'block';
-      }
-    }
+    });
 
     document.addEventListener('DOMContentLoaded', () => {
       restorePreferences();
       initStickyWA();
-      initTestimonials();
 
       const hamburger = document.querySelector('.hamburger');
       const navMenu = document.querySelector('.nav-menu');
       const dropdowns = document.querySelectorAll('.dropdown');
-      const profileImg = document.getElementById('profileImg');
 
       hamburger.addEventListener('click', () => {
         hamburger.classList.toggle('active');
@@ -868,19 +816,11 @@ session_start();
         });
       });
 
-      if (profileImg) {
-        profileImg.addEventListener('click', toggleProfileDropdown);
-      }
-
       document.addEventListener('click', (e) => {
         if (!navMenu.contains(e.target) && !hamburger.contains(e.target)) {
           navMenu.classList.remove('active');
           hamburger.classList.remove('active');
           dropdowns.forEach(d => d.classList.remove('active'));
-        }
-        const profileMenu = document.querySelector('.profile-dropdown .dropdown-menu');
-        if (profileMenu && !profileMenu.contains(e.target) && !profileImg?.contains(e.target)) {
-          profileMenu.style.display = 'none';
         }
       });
     });
