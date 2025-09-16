@@ -7,9 +7,9 @@ error_reporting(E_ALL);
 
 require_once "db_connect.php";
 
-// Asumsi $conn adalah PDO object
-if (!isset($conn)) {
-    die("Koneksi database tidak terdefinisi.");
+// Check if connection is valid
+if (!isset($conn) || !$conn instanceof PDO) {
+    die("Koneksi database tidak terdefinisi atau tidak valid.");
 }
 
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
@@ -32,20 +32,20 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         $user = $stmt->fetch(PDO::FETCH_ASSOC);
 
         if ($user && password_verify($password, $user['password'])) {
-            // Autentikasi berhasil
+            // Authentication successful
             $_SESSION['user'] = [
                 'id' => $user['id'],
                 'name' => $user['name'],
                 'email' => $user['email']
             ];
 
-            // Inisialisasi sesi di database (opsional)
+            // Initialize session in database (optional)
             $session_id = session_id();
             $expires_at = date('Y-m-d H:i:s', strtotime('+1 hour'));
             $stmt2 = $conn->prepare("INSERT INTO sessions (id, user_id, expires_at) VALUES (?, ?, ?) ON DUPLICATE KEY UPDATE expires_at = ?");
             if ($stmt2) {
                 $stmt2->execute([$session_id, $user['id'], $expires_at, $expires_at]);
-                $stmt2->close();
+                // No need to close PDO statement explicitly
             }
 
             header("Location: overview.php");
@@ -58,8 +58,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         $error = "Terjadi kesalahan. Coba lagi.";
     }
 
-    $stmt->close();
-
+    // No need for $stmt->close() in PDO
     if (isset($error)) {
         header("Location: login.php?error=" . urlencode($error));
         exit();
