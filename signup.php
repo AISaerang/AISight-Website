@@ -46,12 +46,11 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 }
 ?>
 
-
 <!DOCTYPE html>
 <html lang="id">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <meta name="description" content="Daftar akun untuk mengakses pelatihan AISight."/>
   <meta property="og:title" content="AISight — Daftar"/>
   <meta property="og:description" content="Daftar akun untuk mengakses pelatihan AISight."/>
@@ -84,13 +83,26 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
       --shadow: 0 8px 24px rgba(2, 6, 23, .08);
     }
 
-    * { box-sizing: border-box; }
+    * {
+      box-sizing: border-box;
+    }
+
     body {
       margin: 0;
       font: 16px/1.6 system-ui, -apple-system, sans-serif;
       color: var(--text);
       background: var(--bg);
       min-height: 100vh;
+    }
+
+    .search-bar { margin-left: 20px; }
+    .search-bar input {
+      padding: 8px;
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      background: var(--surface);
+      color: var(--text);
+      width: 250px;
     }
 
     .navbar {
@@ -197,22 +209,11 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
       padding: 8px 16px;
       border-radius: var(--radius);
       text-decoration: none;
-      font-weight: 500;
-      transition: background-color 0.3s;
     }
 
-    .btn:hover {
-      background: var(--accent-strong);
-    }
-
-    .btn.btn-outline {
+    .btn-outline {
       background: none;
       border: 1px solid var(--border);
-      color: var(--text);
-    }
-
-    .btn.btn-outline:hover {
-      background: var(--surface);
     }
 
     .controls {
@@ -323,22 +324,21 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
       margin: 0 0 16px;
     }
 
-    .form-container {
-      max-width: 400px;
-      margin: 50px auto;
+    .card {
       background: var(--card);
-      padding: 24px;
+      border: 1px solid var(--border);
       border-radius: var(--radius);
+      padding: 24px;
       box-shadow: var(--shadow);
     }
 
-    .form-container label {
+    .card label {
       display: block;
       margin-bottom: 8px;
       font-weight: 500;
     }
 
-    .form-container input {
+    .card input {
       width: 100%;
       padding: 12px;
       margin-bottom: 16px;
@@ -350,13 +350,13 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
       transition: border-color 0.3s, background-color 0.3s;
     }
 
-    .form-container input:focus {
+    .card input:focus {
       outline: none;
       border-color: var(--accent);
       background: var(--card);
     }
 
-    .form-container button {
+    .card button {
       width: 100%;
       padding: 12px;
       background: var(--accent);
@@ -368,20 +368,44 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
       transition: background-color 0.3s;
     }
 
-    .form-container button:hover {
+    .card button:hover {
       background: var(--accent-strong);
     }
 
-    .form-container .google-btn {
+    .card .google-btn {
       background: #4285F4;
       color: white;
       margin-top: 16px;
     }
 
-    .form-container .error {
+    .card .error {
       color: var(--ring);
       margin-top: 8px;
       font-size: 14px;
+    }
+
+    @media (max-width: 960px) {
+      .navbar .inner {
+        flex-direction: column;
+        align-items: flex-start;
+      }
+      .nav-menu, .auth-buttons, .controls {
+        width: 100%;
+        margin-top: 10px;
+      }
+      .nav-menu {
+        flex-direction: column;
+        align-items: flex-start;
+      }
+      .dropdown-menu {
+        position: static;
+        width: 100%;
+        box-shadow: none;
+        border: none;
+      }
+      .dropdown.active .dropdown-menu {
+        display: block;
+      }
     }
 
     @media (max-width: 720px) {
@@ -421,6 +445,14 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
       .hamburger.active span:nth-child(1) { transform: rotate(45deg) translate(5px, 5px); }
       .hamburger.active span:nth-child(2) { opacity: 0; }
       .hamburger.active span:nth-child(3) { transform: rotate(-45deg) translate(7px, -7px); }
+      .search-bar {
+        margin-left: 0;
+        width: 100%;
+        margin-bottom: 10px;
+      }
+      .search-bar input {
+        width: 100%;
+      }
     }
   </style>
 </head>
@@ -430,6 +462,9 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
       <a href="index.html" class="brand">
         <span class="dot"></span> AISight
       </a>
+      <div class="search-bar">
+        <input type="text" placeholder="Cari proyek atau tutor..." disabled>
+      </div>
       <div class="nav-menu">
         <div class="dropdown">
           <a href="#" class="dropdown-toggle">Jalur Belajar</a>
@@ -485,7 +520,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 
   <main class="section">
     <div class="container">
-      <div class="form-container">
+      <div class="card">
         <h1>Daftar Akun</h1>
         <?php if (isset($error)): ?>
           <p class="error"><?php echo htmlspecialchars($error); ?></p>
