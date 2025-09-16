@@ -48,7 +48,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                 // No need to close PDO statement explicitly
             }
 
-            header("Location: overview.php");
+            header("Location: index.php");
             exit();
         } else {
             $error = "Email atau kata sandi salah.";

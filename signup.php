@@ -36,7 +36,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                 $stmt = $conn->prepare("INSERT INTO user_modules (user_id, module_id, status) SELECT ?, id, 'not_started' FROM modules WHERE package_type = 'Regular' LIMIT 1");
                 $stmt->execute([$user_id]);
 
-                header("Location: overview.php");
+                header("Location: index.php");
                 exit();
             } else {
                 $error = "Terjadi kesalahan saat mendaftar. Coba lagi.";

@@ -640,7 +640,7 @@ if (isset($_SESSION['message'])) {
       <div class="auth-buttons">
         <?php if (isset($_SESSION['user'])): ?>
           <div class="profile-dropdown">
-            <img src="<?php echo htmlspecialchars($_SESSION['user']['profile_image'] ?: 'assets/img/default-avatar.jpg'); ?>" alt="Profile" class="profile-img" id="profileImg">
+            <img src="<?php echo htmlspecialchars($_SESSION['user']['profile_image'] ?: 'assets/img/Andi.jpg'); ?>" alt="Profile" class="profile-img" id="profileImg">
             <div class="dropdown-menu">
               <a href="profile.php">Pengaturan Profil</a>
               <a href="courses.php">Kursus Saya</a>
