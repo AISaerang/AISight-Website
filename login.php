@@ -1,7 +1,6 @@
 <?php
-include 'db_connect.php';
-
 session_start();
+
 ?>
 
 <!DOCTYPE html>
@@ -358,25 +357,30 @@ session_start();
 
   <div class="container">
     <div class="login-card">
-      <h2>Masuk ke AISight</h2>
-      <form action="login_process.php" method="POST">
-        <div class="form-group">
-          <label for="email">Email</label>
-          <input type="email" id="email" name="email" required placeholder="Masukkan email Anda">
-        </div>
-        <div class="form-group">
-          <label for="password">Kata Sandi</label>
-          <input type="password" id="password" name="password" required placeholder="Masukkan kata sandi">
-        </div>
-        <button type="submit" class="btn">Masuk</button>
-      </form>
-      <a href="#" class="forgot">Lupa Kata Sandi?</a>
-      <button class="google-btn" disabled>Login dengan Google</button>
-      <div class="signup-link">
-        Belum punya akun? <a href="signup.php">Daftar di sini</a>
-      </div>
+  <h2>Masuk ke AISight</h2>
+  <?php
+  if (isset($_GET['error'])) {
+      echo '<p style="color: #EF4444; margin-bottom: 16px;">' . htmlspecialchars($_GET['error']) . '</p>';
+  }
+  ?>
+  <form action="login_process.php" method="POST">
+    <div class="form-group">
+      <label for="email">Email</label>
+      <input type="email" id="email" name="email" required placeholder="Masukkan email Anda" value="<?php echo isset($_POST['email']) ? htmlspecialchars($_POST['email']) : ''; ?>">
     </div>
+    <div class="form-group">
+      <label for="password">Kata Sandi</label>
+      <input type="password" id="password" name="password" required placeholder="Masukkan kata sandi">
+    </div>
+    <button type="submit" class="btn">Masuk</button>
+  </form>
+  <a href="#" class="forgot">Lupa Kata Sandi?</a>
+  <button class="google-btn" disabled>Login dengan Google</button>
+  <div class="signup-link">
+    Belum punya akun? <a href="signup.php">Daftar di sini</a>
   </div>
+</div>
+</div>
 
   <script>
     const PALETTES = {
