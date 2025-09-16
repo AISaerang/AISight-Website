@@ -1,48 +1,49 @@
 <?php
 session_start();
 
-// Sertakan file koneksi database
 require_once "db_connect.php";
 
-// Periksa apakah form disubmit
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $email = trim($_POST['email']);
     $password = trim($_POST['password']);
 
-    // cegah SQL Injection dengan prepared statement
-    $stmt = $conn->prepare("SELECT email, password FROM users WHERE email = ?");
+    // Prepared statement untuk mencegah SQL Injection
+    $stmt = $conn->prepare("SELECT id, name, email, password FROM users WHERE email = ?");
     $stmt->bind_param("s", $email);
     $stmt->execute();
     $result = $stmt->get_result();
 
     if ($result->num_rows === 1) {
         $user = $result->fetch_assoc();
-        // Verifikasi password
         if (password_verify($password, $user['password'])) {
-            // Autentikasi berhasil, set session
+            // Autentikasi berhasil
             $_SESSION['user'] = [
-                'email' => $user['email'],
-                'profile_image' => 'assets/img/default-avatar.jpg' // Sesuaikan jika ada kolom profile_image
+                'id' => $user['id'],
+                'name' => $user['name'],
+                'email' => $user['email']
             ];
-            // Redirect ke halaman utama
-            header("Location: index.php");
+
+            // Inisialisasi sesi di database (opsional, sesuaikan dengan signup.php)
+            $session_id = session_id();
+            $expires_at = date('Y-m-d H:i:s', strtotime('+1 hour'));
+            $stmt = $conn->prepare("INSERT INTO sessions (id, user_id, expires_at) VALUES (?, ?, ?) ON DUPLICATE KEY UPDATE expires_at = ?");
+            $stmt->execute([$session_id, $user['id'], $expires_at, $expires_at]);
+
+            header("Location: overview.php");
             exit();
         } else {
-            // Password salah
             $error = "Email atau kata sandi salah.";
         }
     } else {
-        // Email tidak ditemukan
         $error = "Email atau kata sandi salah.";
     }
 
     $stmt->close();
     $conn->close();
-}
 
-// Jika ada error atau form tidak disubmit, redirect kembali ke login dengan pesan error
-if (isset($error)) {
-    header("Location: login.php?error=" . urlencode($error));
-    exit();
+    if (isset($error)) {
+        header("Location: login.php?error=" . urlencode($error));
+        exit();
+    }
 }
 ?>
