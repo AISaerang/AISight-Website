@@ -24,7 +24,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
             $stmt = $conn->prepare("INSERT INTO users (name, email, password, referral_code, is_verified, created_at, updated_at) VALUES (?, ?, ?, ?, 0, NOW(), NOW())");
             if ($stmt->execute([$name, $email, $hashed_password, $referral])) {
                 $user_id = $conn->lastInsertId();
-                $_SESSION['user'] = ['id' => $user_id, 'name' => $name, 'email' => $email];
+                $_SESSION['user'] = ['id' => $user_id, 'name' => $name, 'email' => $email, 'profile_image' => 'assets/img/default-avatar.jpg'];
 
                 // Inisialisasi sesi (opsional)
                 $session_id = session_id();
@@ -36,7 +36,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                 $stmt = $conn->prepare("INSERT INTO user_modules (user_id, module_id, status) SELECT ?, id, 'not_started' FROM modules WHERE package_type = 'Regular' LIMIT 1");
                 $stmt->execute([$user_id]);
 
-                header("Location: overview.html");
+                header("Location: overview.php");
                 exit();
             } else {
                 $error = "Terjadi kesalahan saat mendaftar. Coba lagi.";
@@ -214,6 +214,25 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     .btn-outline {
       background: none;
       border: 1px solid var(--border);
+    }
+
+    .profile-dropdown {
+      position: relative;
+    }
+
+    .profile-dropdown .profile-img {
+      width: 40px;
+      height: 40px;
+      border-radius: 50%;
+      object-fit: cover;
+      cursor: pointer;
+      border: 2px solid var(--accent);
+    }
+
+    .profile-dropdown .dropdown-menu {
+      top: calc(100% + 5px);
+      right: 0;
+      left: auto;
     }
 
     .controls {
@@ -459,33 +478,45 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 <body>
   <nav class="navbar">
     <div class="inner container">
-      <a href="index.html" class="brand">
+      <a href="index.php" class="brand">
         <span class="dot"></span> AISight
       </a>
       <div class="search-bar">
-        <input type="text" placeholder="Cari proyek atau tutor..." disabled>
+        <input type="text" placeholder="Cari proyek atau tutor...">
       </div>
       <div class="nav-menu">
         <div class="dropdown">
           <a href="#" class="dropdown-toggle">Jalur Belajar</a>
           <div class="dropdown-menu">
-            <a href="overview.html">Modul</a>
-            <a href="projects.html">Portofolio</a>
+            <a href="overview.php">Modul</a>
+            <a href="projects.php">Portofolio</a>
           </div>
         </div>
-        <a href="simulation.html">Biaya</a>
+        <a href="simulation.php">Biaya</a>
         <div class="dropdown">
           <a href="#" class="dropdown-toggle">Lainnya</a>
           <div class="dropdown-menu">
-            <a href="contact.html">Kontak</a>
-            <a href="blog.html">Blog</a>
-            <a href="faq.html">FAQ</a>
+            <a href="contact.php">Kontak</a>
+            <a href="blog.php">Blog</a>
+            <a href="faq.php">FAQ</a>
           </div>
         </div>
       </div>
       <div class="auth-buttons">
-        <a href="login.php" class="btn btn-outline">Masuk</a>
-        <a href="signup.php" class="btn">Daftar</a>
+        <?php if (isset($_SESSION['user'])): ?>
+          <div class="profile-dropdown">
+            <img src="<?php echo htmlspecialchars($_SESSION['user']['profile_image'] ?: 'assets/img/default-avatar.jpg'); ?>" alt="Profile" class="profile-img" id="profileImg">
+            <div class="dropdown-menu">
+              <a href="profile.php">Pengaturan Profil</a>
+              <a href="courses.php">Kursus Saya</a>
+              <a href="portfolio.php">Portofolio</a>
+              <a href="logout.php">Keluar</a>
+            </div>
+          </div>
+        <?php else: ?>
+          <a href="login.php" class="btn btn-outline">Masuk</a>
+          <a href="signup.php" class="btn">Daftar</a>
+        <?php endif; ?>
       </div>
       <div class="controls">
         <button class="hamburger" aria-label="Toggle menu">
@@ -580,7 +611,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
           .then(response => response.json())
           .then(data => {
             if (data.success) {
-              window.location.href = 'overview.html';
+              window.location.href = 'overview.php';
             } else {
               alert('Gagal menyimpan data. Coba lagi.');
             }
@@ -635,12 +666,23 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
       applyPalette(savedPalette);
     }
 
+    function toggleProfileDropdown() {
+      const profileImg = document.getElementById('profileImg');
+      const menu = profileImg.nextElementSibling;
+      if (menu.style.display === 'block') {
+        menu.style.display = 'none';
+      } else {
+        menu.style.display = 'block';
+      }
+    }
+
     document.addEventListener('DOMContentLoaded', () => {
       restorePreferences();
 
       const hamburger = document.querySelector('.hamburger');
       const navMenu = document.querySelector('.nav-menu');
       const dropdowns = document.querySelectorAll('.dropdown');
+      const profileImg = document.getElementById('profileImg');
 
       hamburger.addEventListener('click', () => {
         hamburger.classList.toggle('active');
@@ -655,11 +697,19 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         });
       });
 
+      if (profileImg) {
+        profileImg.addEventListener('click', toggleProfileDropdown);
+      }
+
       document.addEventListener('click', (e) => {
         if (!navMenu.contains(e.target) && !hamburger.contains(e.target)) {
           navMenu.classList.remove('active');
           hamburger.classList.remove('active');
           dropdowns.forEach(d => d.classList.remove('active'));
+        }
+        const profileMenu = document.querySelector('.profile-dropdown .dropdown-menu');
+        if (profileMenu && !profileMenu.contains(e.target) && !profileImg?.contains(e.target)) {
+          profileMenu.style.display = 'none';
         }
       });
     });

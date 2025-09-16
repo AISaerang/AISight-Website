@@ -614,7 +614,7 @@ if (isset($_SESSION['message'])) {
   <nav class="navbar">
     <div class="inner container">
       <a href="index.php" class="brand">
-        <span class="dot"></span> AISaerang
+        <span class="dot"></span> AISight
       </a>
       <div class="search-bar">
         <input type="text" placeholder="Cari proyek atau tutor...">
