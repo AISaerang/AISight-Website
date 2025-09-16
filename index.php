@@ -164,38 +164,51 @@ if (isset($_SESSION['message'])) {
       /* Ubah layout navbar jadi grid 2 kolom 2 baris:
          baris1: brand | auth (pojok kanan atas)
          baris2: search | controls (ikon di bawah auth) */
-      .navbar .inner{
-        display:grid;
-        grid-template-columns:1fr auto;
-        grid-template-areas:
-          "brand auth"
-          "search controls";
-        row-gap:8px;align-items:center
-      }
-      .brand{grid-area:brand}
-      .search-bar{grid-area:search;margin-left:0}
-      .auth-buttons{grid-area:auth;justify-self:end}
-      .controls{
-        grid-area:controls;justify-self:end;
-        display:flex;flex-direction:column;gap:8px;align-items:flex-end
-      }
+    /* Susunan 2 baris, 2 kolom:
+   baris-1: brand | auth
+   baris-2: search | controls (sejajar satu baris) */
+.navbar .inner{
+  display:grid;
+  grid-template-columns: 1fr auto;
+  grid-template-areas:
+    "brand auth"
+    "search controls";
+  row-gap: 8px;
+  align-items: center;          /* samakan baseline */
+}
 
-      /* Sembunyikan nav links pada mobile (seperti sebelumnya) */
-      .nav-menu{display:none}
+/* Search bar jadi satu baris dengan controls */
+.search-bar{ grid-area: search; margin-left:0; width:100%; }
+.search-bar input{ width:100%; max-width:none; padding:8px 12px; }
 
-      /* Search lebih kecil */
-      .search-bar input{width:min(58vw,220px);padding:8px 12px}
+/* Controls horizontal (hamburger → toggle → palette) */
+.controls{
+  grid-area: controls;
+  justify-self: end;
+  display:flex;
+  flex-direction: row;          /* <— ini kuncinya */
+  align-items: center;
+  gap: 10px;
+}
 
-      /* Hamburger tipis mengikuti tema */
-      .hamburger{display:block;width:28px;height:18px;position:relative;cursor:pointer;background:none;border:none}
-      .hamburger span{position:absolute;height:2px;width:100%;background:var(--text);transition:all .3s ease}
-      .hamburger span:nth-child(1){top:0}
-      .hamburger span:nth-child(2){top:50%;transform:translateY(-50%)}
-      .hamburger span:nth-child(3){bottom:0}
-      .hamburger.active span:nth-child(1){transform:rotate(45deg) translate(5px,5px)}
-      .hamburger.active span:nth-child(2){opacity:0}
-      .hamburger.active span:nth-child(3){transform:rotate(-45deg) translate(7px,-7px)}
-    }
+/* Hamburger tetap tampil di mobile */
+.hamburger{
+  display:block;
+  width:28px; height:18px; position:relative; cursor:pointer; background:none; border:none;
+}
+.hamburger span{
+  position:absolute; height:2px; width:100%; background:var(--text); transition:all .3s ease;
+}
+.hamburger span:nth-child(1){ top:0; }
+.hamburger span:nth-child(2){ top:50%; transform:translateY(-50%); }
+.hamburger span:nth-child(3){ bottom:0; }
+.hamburger.active span:nth-child(1){ transform:rotate(45deg) translate(5px,5px); }
+.hamburger.active span:nth-child(2){ opacity:0; }
+.hamburger.active span:nth-child(3){ transform:rotate(-45deg) translate(7px,-7px); }
+
+/* (opsional) rapikan menu link di mobile */
+.nav-menu{ display:none; }
+
 
     @keyframes fadeIn{from{opacity:0;transform:scale(.98)}to{opacity:1;transform:scale(1)}}
   </style>
