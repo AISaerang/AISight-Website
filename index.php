@@ -634,7 +634,7 @@ session_start();
       <div class="auth-buttons">
         <?php if (isset($_SESSION['user'])): ?>
           <div class="profile-dropdown">
-            <img src="<?php echo htmlspecialchars($_SESSION['user']['profile_image'] ?: 'assets/img/default-avatar.jpg'); ?>" alt="Profile" class="profile-img" onclick="toggleProfileDropdown(this)">
+            <img src="<?php echo htmlspecialchars($_SESSION['user']['profile_image'] ?: 'assets/img/default-avatar.jpg'); ?>" alt="Profile" class="profile-img" id="profileImg">
             <div class="dropdown-menu">
               <a href="profile.php">Pengaturan Profil</a>
               <a href="courses.php">Kursus Saya</a>
@@ -833,7 +833,7 @@ session_start();
       violet: { accent: '#7C3AED', strong: '#5B21B6', ring: '#8B5CF6' },
       orange: { accent: '#FB923C', strong: '#C2410C', ring: '#FDBA74' }
     };
-    const PALETTE_ORDER = ['teal', 'violet', orange'];
+    const PALETTE_ORDER = ['teal', 'violet', 'orange'];
     let currentPaletteIndex = 0;
 
     function applyPalette(name) {
@@ -865,6 +865,8 @@ session_start();
       const savedTheme = localStorage.getItem('theme');
       if (savedTheme === 'light') {
         document.body.classList.add('theme-light');
+      } else {
+        document.body.classList.remove('theme-light');
       }
       const savedPalette = localStorage.getItem('palette') || 'teal';
       applyPalette(savedPalette);
@@ -960,9 +962,14 @@ session_start();
       });
     }
 
-    function toggleProfileDropdown(element) {
-      const menu = element.nextElementSibling;
-      menu.style.display = menu.style.display === 'block' ? 'none' : 'block';
+    function toggleProfileDropdown() {
+      const profileImg = document.getElementById('profileImg');
+      const menu = profileImg.nextElementSibling;
+      if (menu.style.display === 'block') {
+        menu.style.display = 'none';
+      } else {
+        menu.style.display = 'block';
+      }
     }
 
     document.addEventListener('DOMContentLoaded', () => {
@@ -973,6 +980,7 @@ session_start();
       const hamburger = document.querySelector('.hamburger');
       const navMenu = document.querySelector('.nav-menu');
       const dropdowns = document.querySelectorAll('.dropdown');
+      const profileImg = document.getElementById('profileImg');
 
       hamburger.addEventListener('click', () => {
         hamburger.classList.toggle('active');
@@ -987,18 +995,20 @@ session_start();
         });
       });
 
+      if (profileImg) {
+        profileImg.addEventListener('click', toggleProfileDropdown);
+      }
+
       document.addEventListener('click', (e) => {
         if (!navMenu.contains(e.target) && !hamburger.contains(e.target)) {
           navMenu.classList.remove('active');
           hamburger.classList.remove('active');
           dropdowns.forEach(d => d.classList.remove('active'));
         }
-        const profileDropdowns = document.querySelectorAll('.profile-dropdown .dropdown-menu');
-        profileDropdowns.forEach(menu => {
-          if (!menu.contains(e.target) && !e.target.classList.contains('profile-img')) {
-            menu.style.display = 'none';
-          }
-        });
+        const profileMenu = document.querySelector('.profile-dropdown .dropdown-menu');
+        if (profileMenu && !profileMenu.contains(e.target) && !profileImg?.contains(e.target)) {
+          profileMenu.style.display = 'none';
+        }
       });
     });
   </script>
