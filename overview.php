@@ -1,4 +1,9 @@
-<?php include 'db_connect.php'; ?>
+<?php
+include 'db_connect.php';
+
+session_start();
+?>
+
 <!DOCTYPE html>
 <html lang="id">
 <head>
@@ -271,45 +276,248 @@
       padding: 32px 0;
     }
 
-    .project-grid {
+    .hero {
       display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-      gap: 16px;
-      margin-top: 16px;
+      grid-template-columns: 1fr 1fr;
+      gap: 32px;
+      align-items: center;
     }
 
-    .project-thumbnail {
-      cursor: pointer;
-      border: 1px solid var(--border);
-      border-radius: var(--radius);
-      overflow: hidden;
-      transition: transform 0.2s;
+    .hero-visual {
+      max-width: 100%;
     }
 
-    .project-thumbnail:hover {
-      transform: scale(1.05);
-    }
-
-    .project-thumbnail img {
+    .hero-visual svg {
       width: 100%;
       height: auto;
     }
 
-    .project-thumbnail p {
-      margin: 8px 0 0;
+    h1 {
+      font-size: clamp(28px, 5vw, 40px);
+      line-height: 1.2;
+      margin: 0 0 16px;
+    }
+
+    .sub {
+      font-size: 18px;
+      color: var(--muted);
+      margin: 0 0 24px;
+    }
+
+    .badges {
+      display: flex;
+      gap: 12px;
+      flex-wrap: wrap;
+      margin-bottom: 24px;
+    }
+
+    .badge {
+      background: var(--card);
+      border: 1px solid var(--border);
+      padding: 8px 16px;
+      border-radius: 8px;
       font-size: 14px;
-      font-weight: 400;
+    }
+
+    .cta {
+      display: flex;
+      gap: 16px;
+      flex-wrap: wrap;
+    }
+
+    .sticky-cta {
+      position: fixed;
+      bottom: 24px;
+      right: 24px;
+      display: flex;
+      gap: 12px;
+      z-index: 40;
+    }
+
+    .grid-2 {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 24px;
+    }
+
+    .card {
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 24px;
+      box-shadow: var(--shadow);
+    }
+
+    .divider {
+      border: none;
+      border-top: 1px solid var(--border);
+      margin: 24px 0;
+    }
+
+    .metric-row {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 16px;
+    }
+
+    .metric {
       text-align: center;
+    }
+
+    .metric b {
+      display: block;
+      font-size: 18px;
+    }
+
+    .list {
+      list-style: none;
+      padding: 0;
+      margin: 0;
+    }
+
+    .list li {
+      position: relative;
+      padding-left: 24px;
+      margin-bottom: 12px;
+    }
+
+    .list li::before {
+      content: '•';
+      position: absolute;
+      left: 0;
+      color: var(--accent);
+      font-size: 20px;
+    }
+
+    .testimonials {
+      position: relative;
+      overflow: hidden;
+      margin: 24px 0;
+    }
+
+    .testimonials-inner {
+      display: flex;
+      transition: transform 0.5s ease;
+    }
+
+    .testimonial {
+      flex: 0 0 33.33%;
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 24px;
+      box-shadow: var(--shadow);
+    }
+
+    .carousel-btn {
+      position: absolute;
+      top: 50%;
+      transform: translateY(-50%);
+      background: var(--accent);
       color: var(--text);
+      border: none;
+      padding: 10px;
+      cursor: pointer;
+      z-index: 10;
+      border-radius: 50%;
+      font-size: 20px;
+    }
+
+    #prev-test {
+      left: 10px;
+    }
+
+    #next-test {
+      right: 10px;
+    }
+
+    .testimonial p {
+      font-size: 16px;
+      line-height: 1.5;
+      margin: 0 0 16px;
+      padding-bottom: 16px;
+      border-bottom: 1px solid var(--border);
+    }
+
+    .t-author {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      margin-top: 16px;
+    }
+
+    .t-author img {
+      width: 40px;
+      height: 40px;
+      border-radius: 50%;
+      object-fit: cover;
+      border: 2px solid var(--accent);
+    }
+
+    .t-author div {
+      font-size: 14px;
+    }
+
+    .t-author b {
+      font-size: 16px;
+      font-weight: 600;
+    }
+
+    .tutors {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 24px;
+      margin-top: 24px;
+    }
+
+    .tutor {
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 24px;
+      box-shadow: var(--shadow);
+      text-align: center;
+    }
+
+    .tutor img {
+      width: 80px;
+      height: 80px;
+      border-radius: 50%;
+      object-fit: cover;
+      border: 2px solid var(--accent);
+      margin-bottom: 16px;
+    }
+
+    .tutor h3 {
+      font-size: 18px;
+      margin: 0 0 8px;
+      color: var(--text);
+    }
+
+    .tutor p {
+      font-size: 14px;
+      color: var(--muted);
+      margin: 0;
+      line-height: 1.5;
     }
 
     .center {
       text-align: center;
     }
 
-    .no-results {
-      text-align: center;
-      color: var(--muted);
+    @media (max-width: 960px) {
+      .hero {
+        grid-template-columns: 1fr;
+      }
+      .grid-2 {
+        grid-template-columns: 1fr;
+      }
+      .metric-row {
+        grid-template-columns: 1fr;
+      }
+      .testimonial {
+        flex: 0 0 100%;
+      }
     }
 
     @media (max-width: 720px) {
@@ -372,39 +580,55 @@
         gap: 10px;
         font-size: 14px;
       }
+      .tutor img {
+        width: 60px;
+        height: 60px;
+      }
     }
   </style>
 </head>
 <body>
   <nav class="navbar">
     <div class="inner container">
-      <a href="index.html" class="brand">
-        <span class="dot"></span> AISaerang
+      <a href="index.php" class="brand">
+        <span class="dot"></span> AISight
       </a>
       <div class="search-bar">
-        <input type="text" id="searchInput" placeholder="Cari proyek atau tutor...">
+        <input type="text" placeholder="Cari proyek atau tutor...">
       </div>
       <div class="nav-menu">
         <div class="dropdown">
           <a href="#" class="dropdown-toggle">Jalur Belajar</a>
           <div class="dropdown-menu">
-            <a href="overview.html">Modul</a>
-            <a href="projects.html">Portofolio</a>
+            <a href="overview.php">Modul</a>
+            <a href="projects.php">Portofolio</a>
           </div>
         </div>
-        <a href="simulation.html">Biaya</a>
+        <a href="simulation.php">Biaya</a>
         <div class="dropdown">
           <a href="#" class="dropdown-toggle">Lainnya</a>
           <div class="dropdown-menu">
-            <a href="contact.html">Kontak</a>
-            <a href="blog.html">Blog</a>
-            <a href="faq.html">FAQ</a>
+            <a href="contact.php">Kontak</a>
+            <a href="blog.php">Blog</a>
+            <a href="faq.php">FAQ</a>
           </div>
         </div>
       </div>
       <div class="auth-buttons">
-        <a href="login.php" class="btn btn-outline">Masuk</a>
-        <a href="signup.php" class="btn">Daftar</a>
+        <?php if (isset($_SESSION['user'])): ?>
+          <div class="profile-dropdown">
+            <img src="<?php echo htmlspecialchars($_SESSION['user']['profile_image'] ?: 'assets/img/Andi.jpg'); ?>" alt="Profile" class="profile-img" id="profileImg">
+            <div class="dropdown-menu">
+              <a href="profile.php">Pengaturan Profil</a>
+              <a href="courses.php">Kursus Saya</a>
+              <a href="portfolio.php">Portofolio</a>
+              <a href="logout.php">Keluar</a>
+            </div>
+          </div>
+        <?php else: ?>
+          <a href="#" class="btn btn-outline" id="loginBtn">Masuk</a>
+          <a href="signup.php" class="btn">Daftar</a>
+        <?php endif; ?>
       </div>
       <div class="controls">
         <button class="hamburger" aria-label="Toggle menu">
@@ -439,7 +663,7 @@
 
   <div class="sticky-cta">
     <a id="sticky-wa" class="btn" href="#">WhatsApp</a>
-    <a class="btn btn-outline" href="simulation.html">Simulasikan</a>
+    <a class="btn btn-outline" href="simulation.php">Simulasikan</a>
   </div>
 
   <main class="section">
@@ -456,7 +680,7 @@
         if ($projects && count($projects) > 0) {
           echo '<div class="project-grid">';
           foreach ($projects as $project) {
-            echo "<div class='project-thumbnail' data-url='projects.html?id=" . htmlspecialchars($project['id']) . "&tutor=" . urlencode($project['tutor']) . "&project=" . urlencode($project['name']) . "'>";
+            echo "<div class='project-thumbnail' data-url='project.php?id=" . htmlspecialchars($project['id']) . "'>";
             echo "<img src='" . htmlspecialchars($project['thumbnail_url']) . "' alt='" . htmlspecialchars($project['name']) . "'>";
             echo "<p>" . htmlspecialchars($project['name']) . " - " . htmlspecialchars($project['tutor']) . "</p>";
             echo "</div>";
@@ -514,6 +738,8 @@
       const savedTheme = localStorage.getItem('theme');
       if (savedTheme === 'light') {
         document.body.classList.add('theme-light');
+      } else {
+        document.body.classList.remove('theme-light');
       }
       const savedPalette = localStorage.getItem('palette') || 'teal';
       applyPalette(savedPalette);
@@ -528,36 +754,106 @@
       } catch (e) {}
     }
 
-    // Search functionality
-    document.getElementById('searchInput').addEventListener('input', (e) => {
-      const query = e.target.value.toLowerCase();
-      const elements = document.querySelectorAll('.project-thumbnail p');
-      elements.forEach(el => {
-        const text = el.textContent.toLowerCase();
-        const thumbnail = el.parentElement;
-        if (text.includes(query) && query) {
-          thumbnail.style.display = 'block';
-        } else {
-          thumbnail.style.display = 'none';
+    const testimonialsData = [
+      {
+        text: "“Materinya terkurasi sesuai kebutuhan industri. Setelah kelas, aku membangun dashboard KPI marketing yang langsung dipakai tim.”",
+        author: "Rina",
+        role: "Marketing Analyst",
+        avatar: "assets/img/rina.jpg"
+      },
+      {
+        text: "“DAX yang tadinya bikin pusing jadi kebuka karena contoh kasusnya realistis. Review tugasnya detail dan actionable.”",
+        author: "Fajar",
+        role: "Business Intelligence",
+        avatar: "assets/img/fajar.jpg"
+      },
+      {
+        text: "“Portfolio web jadi nilai jual saat apply kerja. Skillset-nya langsung kepakai di tim data kami. Highly recommended.”",
+        author: "Andi",
+        role: "Fresh Graduate",
+        avatar: "assets/img/andi.jpg"
+      },
+      {
+        text: "“Pelatihan ini sangat membantu dalam meningkatkan kemampuan analisis data saya. Mentornya sangat berpengalaman.”",
+        author: "Siti",
+        role: "Data Analyst",
+        avatar: "assets/img/siti.jpg"
+      },
+      {
+        text: "“Sangat puas dengan kurikulum yang relevan dengan industri. Bonus domain portfolio sangat berguna.”",
+        author: "Budi",
+        role: "Professional",
+        avatar: "assets/img/budi.jpg"
+      },
+      {
+        text: "“Rekomendasi tinggi untuk fresh grad. Mentoring review portfolio membuat CV saya lebih menonjol.”",
+        author: "Dewi",
+        role: "Fresh Graduate",
+        avatar: "assets/img/dewi.jpg"
+      }
+    ];
+
+    function initTestimonials() {
+      const inner = document.querySelector('.testimonials-inner');
+      testimonialsData.forEach(data => {
+        const testimonial = document.createElement('div');
+        testimonial.classList.add('testimonial');
+        testimonial.innerHTML = `
+          <p>${data.text}</p>
+          <div class="t-author">
+            <img src="${data.avatar}" alt="${data.author}, ${data.role}" />
+            <div>
+              <b>${data.author}</b><br>
+              <span class="muted">${data.role}</span>
+            </div>
+          </div>
+        `;
+        inner.appendChild(testimonial);
+      });
+
+      const container = document.getElementById('testimonials-carousel');
+      const items = inner.querySelectorAll('.testimonial');
+      if (items.length === 0) return;
+
+      const itemWidth = items[0].offsetWidth;
+      let current = 0;
+      const perView = window.innerWidth <= 960 ? 1 : 3;
+      const max = items.length - perView;
+
+      document.getElementById('prev-test').addEventListener('click', () => {
+        if (current > 0) {
+          current--;
+          inner.style.transform = `translateX(-${current * itemWidth}px)`;
         }
       });
-    });
 
-    // Click event for thumbnails
-    document.querySelectorAll('.project-thumbnail').forEach(thumbnail => {
-      thumbnail.addEventListener('click', () => {
-        const url = thumbnail.getAttribute('data-url');
-        window.location.href = url;
+      document.getElementById('next-test').addEventListener('click', () => {
+        if (current < max) {
+          current++;
+          inner.style.transform = `translateX(-${current * itemWidth}px)`;
+        }
       });
-    });
+    }
+
+    function toggleProfileDropdown() {
+      const profileImg = document.getElementById('profileImg');
+      const menu = profileImg.nextElementSibling;
+      if (menu.style.display === 'block') {
+        menu.style.display = 'none';
+      } else {
+        menu.style.display = 'block';
+      }
+    }
 
     document.addEventListener('DOMContentLoaded', () => {
       restorePreferences();
       initStickyWA();
+      initTestimonials();
 
       const hamburger = document.querySelector('.hamburger');
       const navMenu = document.querySelector('.nav-menu');
       const dropdowns = document.querySelectorAll('.dropdown');
+      const profileImg = document.getElementById('profileImg');
 
       hamburger.addEventListener('click', () => {
         hamburger.classList.toggle('active');
@@ -572,11 +868,19 @@
         });
       });
 
+      if (profileImg) {
+        profileImg.addEventListener('click', toggleProfileDropdown);
+      }
+
       document.addEventListener('click', (e) => {
         if (!navMenu.contains(e.target) && !hamburger.contains(e.target)) {
           navMenu.classList.remove('active');
           hamburger.classList.remove('active');
           dropdowns.forEach(d => d.classList.remove('active'));
+        }
+        const profileMenu = document.querySelector('.profile-dropdown .dropdown-menu');
+        if (profileMenu && !profileMenu.contains(e.target) && !profileImg?.contains(e.target)) {
+          profileMenu.style.display = 'none';
         }
       });
     });
