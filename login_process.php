@@ -1,4 +1,6 @@
 <?php
+include 'db_connect.php';
+
 session_start();
 // Contoh sederhana (ganti dengan logika autentikasi nyata)
 if ($_SERVER["REQUEST_METHOD"] == "POST") {

@@ -1,4 +1,6 @@
 <?php
+include 'db_connect.php';
+
 session_start();
 if (isset($_SESSION['message'])) {
     echo "<script>alert('" . addslashes($_SESSION['message']) . "');</script>";
