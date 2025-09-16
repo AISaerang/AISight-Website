@@ -473,9 +473,32 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         width: 100%;
       }
     }
+
+    /* ===== AUTH PAGE SIZE (compact seperti sampel) ===== */
+body.auth .section { padding: 40px 0; }
+body.auth .container { max-width: 560px; padding: 0 20px; }
+body.auth .card {
+  margin: 0 auto;
+  width: 100%;
+  max-width: 28rem;      /* ~448px */
+  padding: 20px;
+  border-radius: 14px;
+}
+body.auth h1 { font-size: 26px; margin-bottom: 14px; }
+body.auth .card input {
+  height: 44px;
+  padding: 0 12px;
+  margin-bottom: 12px;
+}
+body.auth .card button,
+body.auth .card .google-btn { height: 44px; }
+body.auth .forgot,
+body.auth .signup-link { display:block; margin-top:8px; }
+
+
   </style>
 </head>
-<body>
+<body class="auth">
   <nav class="navbar">
     <div class="inner container">
       <a href="index.php" class="brand">
