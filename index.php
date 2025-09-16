@@ -1,5 +1,9 @@
 <?php
 session_start();
+if (isset($_SESSION['message'])) {
+    echo "<script>alert('" . addslashes($_SESSION['message']) . "');</script>";
+    unset($_SESSION['message']);
+}
 ?>
 
 <!DOCTYPE html>
