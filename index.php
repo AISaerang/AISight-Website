@@ -86,30 +86,31 @@ if (isset($_SESSION['message'])) {
       display: flex;
       align-items: center;
       justify-content: space-between;
-      padding: 14px var(--pad);
-      gap: 16px;
+      padding: 12px var(--pad);
+      gap: 12px;
     }
 
     .brand {
       display: flex;
       align-items: center;
-      gap: 10px;
+      gap: 8px;
       font-weight: 700;
       letter-spacing: .2px;
       text-decoration: none;
       color: var(--text);
+      font-size: 20px;
     }
 
     .brand .dot {
-      width: 10px;
-      height: 10px;
+      width: 8px;
+      height: 8px;
       border-radius: 999px;
       background: linear-gradient(135deg, var(--accent), var(--ring));
     }
 
     .nav-menu {
       display: flex;
-      gap: 18px;
+      gap: 12px;
       align-items: center;
     }
 
@@ -118,6 +119,7 @@ if (isset($_SESSION['message'])) {
       opacity: .9;
       text-decoration: none;
       padding: 4px 8px;
+      font-size: 14px;
     }
 
     .nav-menu a:hover {
@@ -130,6 +132,7 @@ if (isset($_SESSION['message'])) {
 
     .dropdown-toggle {
       cursor: pointer;
+      font-size: 14px;
     }
 
     .dropdown-menu {
@@ -142,7 +145,7 @@ if (isset($_SESSION['message'])) {
       border-radius: var(--radius);
       box-shadow: var(--shadow);
       padding: 8px 0;
-      min-width: 150px;
+      min-width: 140px;
     }
 
     .dropdown:hover .dropdown-menu {
@@ -151,9 +154,10 @@ if (isset($_SESSION['message'])) {
 
     .dropdown-menu a {
       display: block;
-      padding: 8px 16px;
+      padding: 6px 12px;
       color: var(--text);
       text-decoration: none;
+      font-size: 13px;
     }
 
     .dropdown-menu a:hover {
@@ -168,14 +172,16 @@ if (isset($_SESSION['message'])) {
     .btn {
       background: var(--accent);
       color: var(--text);
-      padding: 8px 16px;
+      padding: 6px 12px;
       border-radius: var(--radius);
       text-decoration: none;
+      font-size: 14px;
     }
 
     .btn-outline {
       background: none;
       border: 1px solid var(--border);
+      font-size: 14px;
     }
 
     .profile-dropdown {
@@ -183,8 +189,8 @@ if (isset($_SESSION['message'])) {
     }
 
     .profile-dropdown .profile-img {
-      width: 40px;
-      height: 40px;
+      width: 32px;
+      height: 32px;
       border-radius: 50%;
       object-fit: cover;
       cursor: pointer;
@@ -195,27 +201,26 @@ if (isset($_SESSION['message'])) {
       top: calc(100% + 5px);
       right: 0;
       left: auto;
+      min-width: 130px;
     }
 
     .controls {
       display: flex;
-      gap: 10px;
+      gap: 8px;
       align-items: center;
     }
 
     .theme-toggle {
-      position: relative;
-      width: 64px;
-      height: 32px;
+      width: 56px;
+      height: 28px;
       border-radius: 999px;
       border: 1px solid var(--border);
       background: var(--card);
       cursor: pointer;
-      padding: 0;
+      padding: 0 4px;
       display: flex;
       align-items: center;
       justify-content: space-between;
-      padding: 0 6px;
       transition: background-color 0.3s;
     }
 
@@ -224,41 +229,32 @@ if (isset($_SESSION['message'])) {
     }
 
     .theme-toggle svg {
-      width: 18px;
-      height: 18px;
+      width: 16px;
+      height: 16px;
       opacity: 0.7;
-      z-index: 2;
-      position: relative;
     }
 
     .theme-toggle .thumb {
-      position: absolute;
+      width: 22px;
+      height: 22px;
       top: 3px;
       left: 3px;
-      width: 26px;
-      height: 26px;
-      border-radius: 999px;
-      background: var(--accent);
-      transition: transform 0.25s cubic-bezier(0.4, 0, 0.2, 1);
-      z-index: 1;
     }
 
     body.theme-light .theme-toggle .thumb {
-      transform: translateX(32px);
-      background: linear-gradient(180deg, #333, #555);
+      transform: translateX(26px);
     }
 
     .palette-btn {
-      width: 36px;
-      height: 36px;
-      border-radius: 10px;
+      width: 32px;
+      height: 32px;
+      border-radius: 8px;
       background: var(--card);
       border: 1px solid var(--border);
       cursor: pointer;
       padding: 0;
       display: grid;
       place-items: center;
-      transition: background-color 0.3s, transform 0.2s;
     }
 
     .palette-btn:hover {
@@ -271,22 +267,14 @@ if (isset($_SESSION['message'])) {
     }
 
     .palette-btn svg {
-      width: 22px;
-      height: 22px;
-      color: var(--text);
+      width: 18px;
+      height: 18px;
     }
 
     .palette-btn::after {
-      content: '';
-      position: absolute;
-      bottom: -4px;
-      left: 50%;
-      transform: translateX(-50%);
-      width: 8px;
-      height: 8px;
-      border-radius: 50%;
-      background: var(--accent);
-      border: 2px solid var(--bg);
+      width: 6px;
+      height: 6px;
+      border-width: 1px;
     }
 
     .container {
@@ -337,14 +325,14 @@ if (isset($_SESSION['message'])) {
     .badge {
       background: var(--card);
       border: 1px solid var(--border);
-      padding: 8px 16px;
+      padding: 6px 12px;
       border-radius: 8px;
-      font-size: 14px;
+      font-size: 13px;
     }
 
     .cta {
       display: flex;
-      gap: 16px;
+      gap: 12px;
       flex-wrap: wrap;
     }
 
@@ -353,7 +341,7 @@ if (isset($_SESSION['message'])) {
       bottom: 24px;
       right: 24px;
       display: flex;
-      gap: 12px;
+      gap: 8px;
       z-index: 40;
     }
 
@@ -367,20 +355,20 @@ if (isset($_SESSION['message'])) {
       background: var(--card);
       border: 1px solid var(--border);
       border-radius: var(--radius);
-      padding: 24px;
+      padding: 20px;
       box-shadow: var(--shadow);
     }
 
     .divider {
       border: none;
       border-top: 1px solid var(--border);
-      margin: 24px 0;
+      margin: 20px 0;
     }
 
     .metric-row {
       display: grid;
       grid-template-columns: repeat(2, 1fr);
-      gap: 16px;
+      gap: 12px;
     }
 
     .metric {
@@ -388,8 +376,7 @@ if (isset($_SESSION['message'])) {
     }
 
     .metric b {
-      display: block;
-      font-size: 18px;
+      font-size: 16px;
     }
 
     .list {
@@ -399,23 +386,18 @@ if (isset($_SESSION['message'])) {
     }
 
     .list li {
-      position: relative;
-      padding-left: 24px;
-      margin-bottom: 12px;
+      padding-left: 20px;
+      margin-bottom: 10px;
     }
 
     .list li::before {
-      content: '•';
-      position: absolute;
-      left: 0;
-      color: var(--accent);
-      font-size: 20px;
+      font-size: 18px;
     }
 
     .testimonials {
       position: relative;
       overflow: hidden;
-      margin: 24px 0;
+      margin: 20px 0;
     }
 
     .testimonials-inner {
@@ -428,100 +410,77 @@ if (isset($_SESSION['message'])) {
       background: var(--card);
       border: 1px solid var(--border);
       border-radius: var(--radius);
-      padding: 24px;
+      padding: 20px;
       box-shadow: var(--shadow);
     }
 
     .carousel-btn {
-      position: absolute;
       top: 50%;
       transform: translateY(-50%);
       background: var(--accent);
       color: var(--text);
       border: none;
-      padding: 10px;
+      padding: 8px;
       cursor: pointer;
       z-index: 10;
       border-radius: 50%;
-      font-size: 20px;
+      font-size: 18px;
     }
 
     #prev-test {
-      left: 10px;
+      left: 8px;
     }
 
     #next-test {
-      right: 10px;
+      right: 8px;
     }
 
     .testimonial p {
-      font-size: 16px;
-      line-height: 1.5;
-      margin: 0 0 16px;
-      padding-bottom: 16px;
-      border-bottom: 1px solid var(--border);
+      font-size: 14px;
+      margin: 0 0 12px;
+      padding-bottom: 12px;
     }
 
     .t-author {
-      display: flex;
-      align-items: center;
-      gap: 12px;
-      margin-top: 16px;
+      gap: 10px;
     }
 
     .t-author img {
-      width: 40px;
-      height: 40px;
-      border-radius: 50%;
-      object-fit: cover;
-      border: 2px solid var(--accent);
+      width: 36px;
+      height: 36px;
     }
 
     .t-author div {
-      font-size: 14px;
+      font-size: 12px;
     }
 
     .t-author b {
-      font-size: 16px;
-      font-weight: 600;
+      font-size: 14px;
     }
 
     .tutors {
       display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-      gap: 24px;
-      margin-top: 24px;
+      grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+      gap: 20px;
     }
 
     .tutor {
-      background: var(--card);
-      border: 1px solid var(--border);
-      border-radius: var(--radius);
-      padding: 24px;
-      box-shadow: var(--shadow);
-      text-align: center;
+      padding: 20px;
     }
 
     .tutor img {
-      width: 80px;
-      height: 80px;
-      border-radius: 50%;
-      object-fit: cover;
-      border: 2px solid var(--accent);
-      margin-bottom: 16px;
+      width: 72px;
+      height: 72px;
+      margin-bottom: 12px;
     }
 
     .tutor h3 {
-      font-size: 18px;
-      margin: 0 0 8px;
-      color: var(--text);
+      font-size: 16px;
+      margin: 0 0 6px;
     }
 
     .tutor p {
-      font-size: 14px;
-      color: var(--muted);
-      margin: 0;
-      line-height: 1.5;
+      font-size: 13px;
     }
 
     .center {
@@ -551,10 +510,20 @@ if (isset($_SESSION['message'])) {
       border: 1px solid var(--border);
       border-radius: var(--radius);
       padding: 20px;
-      width: 300px; /* Minimalistik */
+      width: 90%; /* Presisi di mobile */
+      max-width: 400px; /* Sedikit lebih besar di web */
       box-shadow: var(--shadow);
       text-align: center;
+      position: relative;
       animation: fadeIn 0.3s;
+    }
+
+    @media (max-width: 768px) {
+      .modal-content {
+        width: 100%; /* Penuh di mobile */
+        max-height: 90vh;
+        overflow-y: auto;
+      }
     }
 
     @keyframes fadeIn {
@@ -588,6 +557,12 @@ if (isset($_SESSION['message'])) {
       background: var(--surface);
       color: var(--text);
       font-size: 14px;
+      transition: border-color 0.2s;
+    }
+
+    .modal-content input:focus {
+      border-color: var(--accent);
+      outline: none;
     }
 
     .modal-content button {
@@ -599,6 +574,7 @@ if (isset($_SESSION['message'])) {
       border-radius: 8px;
       cursor: pointer;
       font-weight: 500;
+      transition: background 0.2s;
     }
 
     .modal-content button:hover {
@@ -612,14 +588,28 @@ if (isset($_SESSION['message'])) {
       background: none;
       border: none;
       color: var(--text);
-      font-size: 18px;
+      font-size: 20px;
       cursor: pointer;
+      padding: 0;
+      line-height: 1;
     }
 
     .modal-content .error {
       color: var(--ring);
       font-size: 12px;
       margin-top: 8px;
+    }
+
+    .forgot {
+      display: block;
+      margin-top: 10px;
+      font-size: 12px;
+      color: var(--muted);
+      text-decoration: none;
+    }
+
+    .forgot:hover {
+      color: var(--accent);
     }
 
     @media (max-width: 960px) {
@@ -641,14 +631,14 @@ if (isset($_SESSION['message'])) {
       .nav-menu {
         display: none;
         position: absolute;
-        top: 60px;
+        top: 56px;
         right: 0;
         flex-direction: column;
-        background: var(--card);
-        padding: 20px;
+        background: var(--card); /* Mengikuti tema */
+        padding: 16px;
         border-radius: var(--radius);
         box-shadow: var(--shadow);
-        width: 200px;
+        width: 180px;
       }
       .nav-menu.active {
         display: flex;
@@ -665,21 +655,21 @@ if (isset($_SESSION['message'])) {
       }
       .auth-buttons {
         flex-direction: column;
-        gap: 10px;
+        gap: 8px;
       }
       .hamburger {
         display: block;
-        width: 30px;
-        height: 20px;
+        width: 28px;
+        height: 18px;
         position: relative;
         cursor: pointer;
+        background: none; /* Tidak ada latar belakang */
       }
       .hamburger span {
         position: absolute;
-        height: 3px;
+        height: 2px;
         width: 100%;
-        background: var(--text);
-        display: block;
+        background: var(--text); /* Mengikuti tema */
         transition: all 0.3s ease;
       }
       .hamburger span:nth-child(1) { top: 0; }
@@ -694,12 +684,12 @@ if (isset($_SESSION['message'])) {
         align-items: flex-end;
       }
       .nav {
-        gap: 10px;
-        font-size: 14px;
+        gap: 8px;
+        font-size: 13px;
       }
       .tutor img {
-        width: 60px;
-        height: 60px;
+        width: 56px;
+        height: 56px;
       }
     }
   </style>
@@ -787,17 +777,14 @@ if (isset($_SESSION['message'])) {
     <div class="modal-content">
       <button class="close-btn" id="closeModal">&times;</button>
       <h2>Masuk</h2>
-      <?php if (isset($_GET['error'])): ?>
-        <p class="error"><?php echo htmlspecialchars($_GET['error']); ?></p>
-      <?php endif; ?>
       <form id="loginForm" method="POST" action="login_process.php">
         <div class="form-group">
           <label for="email">Email</label>
-          <input type="email" id="email" name="email" required placeholder="Masukkan email Anda">
+          <input type="email" id="email" name="email" required placeholder="Masukkan email Anda" autocomplete="email">
         </div>
         <div class="form-group">
           <label for="password">Kata Sandi</label>
-          <input type="password" id="password" name="password" required placeholder="Masukkan kata sandi">
+          <input type="password" id="password" name="password" required placeholder="Masukkan kata sandi" autocomplete="current-password">
         </div>
         <button type="submit">Masuk</button>
       </form>
@@ -1140,6 +1127,7 @@ if (isset($_SESSION['message'])) {
       // Modal Login
       loginBtn.addEventListener('click', () => {
         loginModal.classList.add('active');
+        document.getElementById('email').focus(); // Fokus ke input email
       });
 
       closeModal.addEventListener('click', () => {
@@ -1154,6 +1142,12 @@ if (isset($_SESSION['message'])) {
 
       loginForm.addEventListener('submit', (e) => {
         e.preventDefault();
+        const email = document.getElementById('email').value;
+        const password = document.getElementById('password').value;
+        if (!email || !password) {
+          loginModal.querySelector('.error').textContent = 'Email dan kata sandi wajib diisi.';
+          return;
+        }
         const formData = new FormData(loginForm);
 
         fetch('login_process.php', {
@@ -1166,6 +1160,8 @@ if (isset($_SESSION['message'])) {
             window.location.href = 'overview.php';
           } else {
             loginModal.querySelector('.error').textContent = data.error || 'Terjadi kesalahan.';
+            document.getElementById('password').value = ''; // Reset password
+            document.getElementById('email').focus(); // Fokus kembali ke email
           }
         })
         .catch(error => {
