@@ -528,100 +528,6 @@ if (isset($_SESSION['message'])) {
       text-align: center;
     }
 
-    /* Modal Styles */
-    .modal {
-      display: none;
-      position: fixed;
-      top: 0;
-      left: 0;
-      width: 100%;
-      height: 100%;
-      background: rgba(0, 0, 0, 0.5);
-      justify-content: center;
-      align-items: center;
-      z-index: 1000;
-    }
-
-    .modal.active {
-      display: flex;
-    }
-
-    .modal-content {
-      background: var(--card);
-      border: 1px solid var(--border);
-      border-radius: var(--radius);
-      padding: 20px;
-      width: 300px; /* Minimalistik */
-      box-shadow: var(--shadow);
-      text-align: center;
-      animation: fadeIn 0.3s;
-    }
-
-    @keyframes fadeIn {
-      from { opacity: 0; transform: scale(0.9); }
-      to { opacity: 1; transform: scale(1); }
-    }
-
-    .modal-content h2 {
-      font-size: 20px;
-      margin-bottom: 16px;
-      color: var(--text);
-    }
-
-    .modal-content .form-group {
-      margin-bottom: 12px;
-      text-align: left;
-    }
-
-    .modal-content label {
-      display: block;
-      font-size: 14px;
-      color: var(--muted);
-      margin-bottom: 4px;
-    }
-
-    .modal-content input {
-      width: 100%;
-      padding: 8px;
-      border: 1px solid var(--border);
-      border-radius: 8px;
-      background: var(--surface);
-      color: var(--text);
-      font-size: 14px;
-    }
-
-    .modal-content button {
-      width: 100%;
-      padding: 8px;
-      background: var(--accent);
-      border: none;
-      color: var(--text);
-      border-radius: 8px;
-      cursor: pointer;
-      font-weight: 500;
-    }
-
-    .modal-content button:hover {
-      background: var(--accent-strong);
-    }
-
-    .modal-content .close-btn {
-      position: absolute;
-      top: 10px;
-      right: 10px;
-      background: none;
-      border: none;
-      color: var(--text);
-      font-size: 18px;
-      cursor: pointer;
-    }
-
-    .modal-content .error {
-      color: var(--ring);
-      font-size: 12px;
-      margin-top: 8px;
-    }
-
     @media (max-width: 960px) {
       .hero {
         grid-template-columns: 1fr;
@@ -743,7 +649,7 @@ if (isset($_SESSION['message'])) {
             </div>
           </div>
         <?php else: ?>
-          <a href="#" class="btn btn-outline" id="loginBtn">Masuk</a>
+          <a href="login.php" class="btn btn-outline">Masuk</a>
           <a href="signup.php" class="btn">Daftar</a>
         <?php endif; ?>
       </div>
@@ -783,28 +689,6 @@ if (isset($_SESSION['message'])) {
     <a class="btn btn-outline" href="simulation.php">Simulasikan</a>
   </div>
 
-  <div class="modal" id="loginModal">
-    <div class="modal-content">
-      <button class="close-btn" id="closeModal">&times;</button>
-      <h2>Masuk</h2>
-      <?php if (isset($_GET['error'])): ?>
-        <p class="error"><?php echo htmlspecialchars($_GET['error']); ?></p>
-      <?php endif; ?>
-      <form id="loginForm" method="POST" action="login_process.php">
-        <div class="form-group">
-          <label for="email">Email</label>
-          <input type="email" id="email" name="email" required placeholder="Masukkan email Anda">
-        </div>
-        <div class="form-group">
-          <label for="password">Kata Sandi</label>
-          <input type="password" id="password" name="password" required placeholder="Masukkan kata sandi">
-        </div>
-        <button type="submit">Masuk</button>
-      </form>
-      <a href="#" class="forgot">Lupa Kata Sandi?</a>
-    </div>
-  </div>
-
   <header class="section">
     <div class="container hero">
       <div>
@@ -836,7 +720,7 @@ if (isset($_SESSION['message'])) {
             <rect width="600" height="400" fill="url(#grid)"/>
           </g>
           <g fill="url(#grad)">
-            <rect x="80" y="240" width="50" height="120">
+            <rect x="80"  y="240" width="50" height="120">
               <animate attributeName="y" values="260;240;260" dur="3s" repeatCount="indefinite"/>
               <animate attributeName="height" values="100;120;100" dur="3s" repeatCount="indefinite"/>
             </rect>
@@ -881,17 +765,17 @@ if (isset($_SESSION['message'])) {
         <div class="grid-2">
           <div class="card">
             <h3>Kenapa AISight lebih bernilai?</h3>
-            <p class="muted">
-              Harga sertifikasi Power BI Data Analyst Associate dari Microsoft sekitar Rp 2,5 juta untuk 1 exam saja, tanpa pelatihan.
-              <a href="https://learn.microsoft.com/en-us/credentials/certifications/data-analyst-associate/?practice-assessment-type=certification" target="_blank" class="citation">
-                <span class="badge">learn.microsoft.com</span>
-              </a>
-              Course eksternal seperti Nexacu mulai dari Rp 6 juta untuk 1 hari training dasar.
-              <a href="https://nexacu.com/microsoft-power-bi-training-courses/" target="_blank" class="citation">
-                <span class="badge">nexacu.com</span>
-              </a>
-              Disini kalian bisa hemat hingga 50% dan dapat hasil maksimal!
-            </p>
+           <p class="muted">
+  Harga sertifikasi Power BI Data Analyst Associate dari Microsoft sekitar Rp 2,5 juta untuk 1 exam saja, tanpa pelatihan.
+  <a href="https://learn.microsoft.com/en-us/credentials/certifications/data-analyst-associate/?practice-assessment-type=certification" target="_blank" class="citation">
+    <span class="badge">learn.microsoft.com</span>
+  </a>
+  Course eksternal seperti Nexacu mulai dari Rp 6 juta untuk 1 hari training dasar.
+  <a href="https://nexacu.com/microsoft-power-bi-training-courses/" target="_blank" class="citation">
+    <span class="badge">nexacu.com</span>
+  </a>
+  Disini kalian bisa hemat hingga 50% dan dapat hasil maksimal!
+ </p>
             <hr class="divider">
             <div class="metric-row">
               <div class="metric"><b>1–4 jt</b><span class="muted">mengikuti modul pilihan</span></div>
@@ -1103,10 +987,6 @@ if (isset($_SESSION['message'])) {
       const navMenu = document.querySelector('.nav-menu');
       const dropdowns = document.querySelectorAll('.dropdown');
       const profileImg = document.getElementById('profileImg');
-      const loginBtn = document.getElementById('loginBtn');
-      const loginModal = document.getElementById('loginModal');
-      const closeModal = document.getElementById('closeModal');
-      const loginForm = document.getElementById('loginForm');
 
       hamburger.addEventListener('click', () => {
         hamburger.classList.toggle('active');
@@ -1135,43 +1015,6 @@ if (isset($_SESSION['message'])) {
         if (profileMenu && !profileMenu.contains(e.target) && !profileImg?.contains(e.target)) {
           profileMenu.style.display = 'none';
         }
-      });
-
-      // Modal Login
-      loginBtn.addEventListener('click', () => {
-        loginModal.classList.add('active');
-      });
-
-      closeModal.addEventListener('click', () => {
-        loginModal.classList.remove('active');
-      });
-
-      window.addEventListener('click', (e) => {
-        if (e.target === loginModal) {
-          loginModal.classList.remove('active');
-        }
-      });
-
-      loginForm.addEventListener('submit', (e) => {
-        e.preventDefault();
-        const formData = new FormData(loginForm);
-
-        fetch('login_process.php', {
-          method: 'POST',
-          body: formData
-        })
-        .then(response => response.json())
-        .then(data => {
-          if (data.success) {
-            window.location.href = 'overview.php';
-          } else {
-            loginModal.querySelector('.error').textContent = data.error || 'Terjadi kesalahan.';
-          }
-        })
-        .catch(error => {
-          console.error('Error:', error);
-          loginModal.querySelector('.error').textContent = 'Terjadi kesalahan. Coba lagi.';
-        });
       });
     });
   </script>
